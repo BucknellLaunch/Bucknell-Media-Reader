@@ -25,11 +25,11 @@
             android:textSize="@dimen/notepad_margin"
             android:textStyle="bold" />
 
-        <ListView
-            android:id="@+id/listMainView"
+        <fragment
+            android:id="@+id/BucknellianNewsFragment"
+            android:name="com.example.bucknellian.views.newsFragment"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
-        </ListView>
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
 </FrameLayout>

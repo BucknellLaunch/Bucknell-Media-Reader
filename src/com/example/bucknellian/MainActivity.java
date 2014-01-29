@@ -3,6 +3,7 @@ package com.example.bucknellian;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.FragmentManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +14,7 @@ import android.widget.ListView;
 
 import com.example.bucknellian.data.RssItem;
 import com.example.bucknellian.util.RssReader;
+import com.example.bucknellian.views.newsFragment;
 
 public class MainActivity extends Activity {
 
@@ -36,11 +38,7 @@ public class MainActivity extends Activity {
 	private class GetRSSDataTask extends AsyncTask<String, Void, List<RssItem>> {
 		@Override
 		protected void onPreExecute() {
-			ViewGroup mainView = (ViewGroup) findViewById(R.id.mainView);
-			mainView.setVisibility(View.INVISIBLE);
-
-			View progressBar = (View) findViewById(R.id.progressBar1);
-			progressBar.setVisibility(View.VISIBLE);
+			loadProgressBar();
 
 		}
 
@@ -67,24 +65,39 @@ public class MainActivity extends Activity {
 		@Override
 		protected void onPostExecute(List<RssItem> result) {
 
+			loadMainScreen();
+
+			// Create a list adapter
+			ArrayAdapter<RssItem> adapter = new ArrayAdapter<RssItem>(local,
+					R.layout.paperpad_list, result);
+
+			// Get references to the Fragments
+			FragmentManager fm = getFragmentManager();
+			// find the fragment
+			newsFragment bucknellianNewsFragment = (newsFragment) fm
+					.findFragmentById(R.id.BucknellianNewsFragment);
+			// set listItems variable in bucknellianNewsFragment for local
+			// reference
+			bucknellianNewsFragment.setListItems(result);
+			// set adapter
+			bucknellianNewsFragment.setListAdapter(adapter);
+
+		}
+
+		private void loadProgressBar() {
+			ViewGroup mainView = (ViewGroup) findViewById(R.id.mainView);
+			mainView.setVisibility(View.INVISIBLE);
+
+			View progressBar = (View) findViewById(R.id.progressBar1);
+			progressBar.setVisibility(View.VISIBLE);
+		}
+
+		private void loadMainScreen() {
 			View progressBar = (View) findViewById(R.id.progressBar1);
 			progressBar.setVisibility(View.INVISIBLE);
 
 			ViewGroup mainView = (ViewGroup) findViewById(R.id.mainView);
 			mainView.setVisibility(View.VISIBLE);
-
-			// Get a ListView from main view
-			ListView items = (ListView) findViewById(R.id.listMainView);
-
-			// Create a list adapter
-			ArrayAdapter<RssItem> adapter = new ArrayAdapter<RssItem>(local,
-					R.layout.paperpad_list, result);
-			// Set list adapter for the ListView
-			items.setAdapter(adapter);
-
-			// Set list view item click listener
-			items.setOnItemClickListener(new ListListener(result, local));
-
 		}
 	}
 }
