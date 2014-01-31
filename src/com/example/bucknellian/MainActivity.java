@@ -2,15 +2,16 @@ package com.example.bucknellian;
 
 import java.util.List;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
 import com.example.bucknellian.data.RssItem;
 import com.example.bucknellian.util.RssReader;
@@ -23,7 +24,6 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
 		setContentView(R.layout.activity_main);
 		local = this;
 
@@ -66,6 +66,7 @@ public class MainActivity extends Activity {
 		protected void onPostExecute(List<RssItem> result) {
 
 			loadMainScreen();
+			setTabs();
 
 			// Create a list adapter
 			ArrayAdapter<RssItem> adapter = new ArrayAdapter<RssItem>(local,
@@ -99,5 +100,38 @@ public class MainActivity extends Activity {
 			ViewGroup mainView = (ViewGroup) findViewById(R.id.mainView);
 			mainView.setVisibility(View.VISIBLE);
 		}
+		
+		private void setTabs(){
+			final ActionBar actionBar = getActionBar();
+			// Specify that tabs should be displayed in the action bar.
+			actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+			// Create a tab listener that is called when the user changes tabs.
+
+			ActionBar.TabListener tabListener = new ActionBar.TabListener() {
+				public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
+					// show the given tab
+				}
+
+				public void onTabUnselected(ActionBar.Tab tab,
+						FragmentTransaction ft) {
+					// hide the given tab
+				}
+
+				public void onTabReselected(ActionBar.Tab tab,
+						FragmentTransaction ft) {
+					// probably ignore this event
+				}
+			};
+
+			actionBar.addTab(actionBar.newTab().setText("Bucknellian")
+					.setTabListener(tabListener));
+			
+			actionBar.addTab(actionBar.newTab().setText("Something else")
+					.setTabListener(tabListener));
+			
+			actionBar.addTab(actionBar.newTab().setText("Something else")
+					.setTabListener(tabListener));
+		}
+
 	}
 }
