@@ -29,7 +29,7 @@ public class MainActivity extends Activity {
 
 		GetRSSDataTask task = new GetRSSDataTask();
 
-		task.execute("http://bucknellian.blogs.bucknell.edu/feed/");
+		task.execute("http://bucknellian.net/feed/");
 
 		Log.d("RssReader", Thread.currentThread().getName());
 
@@ -39,7 +39,6 @@ public class MainActivity extends Activity {
 		@Override
 		protected void onPreExecute() {
 			loadProgressBar();
-
 		}
 
 		@Override
