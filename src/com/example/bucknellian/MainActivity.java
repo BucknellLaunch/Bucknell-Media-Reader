@@ -32,7 +32,7 @@ public class MainActivity extends Activity {
 		task.execute("http://bucknellian.net/feed/");
 
 		Log.d("RssReader", Thread.currentThread().getName());
-
+		
 	}
 
 	private class GetRSSDataTask extends AsyncTask<String, Void, List<RssItem>> {
