@@ -17,9 +17,11 @@ public class RssParseHandler extends DefaultHandler {
     private boolean parsingTitle;
     // Parsing link indicator
     private boolean parsingLink;
+    private String icon;
     
-    public RssParseHandler() {
+    public RssParseHandler(String icon) {
         rssItems = new ArrayList<RssItem>();
+        this.icon = icon;
     }
     
     // We have an access method which returns a list of items that are read from the RSS feed. This method will be called when parsing is done.
@@ -42,6 +44,7 @@ public class RssParseHandler extends DefaultHandler {
     @Override
     public void endElement(String uri, String localName, String qName) throws SAXException {
         if ("item".equals(qName)) {
+        	currentItem.setIcon(this.icon);
             rssItems.add(currentItem);
             currentItem = null;
         } else if ("title".equals(qName)) {
