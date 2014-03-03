@@ -1,6 +1,6 @@
 # README
 
-This is a RSS reader for Bucknellian magazine (http://bucknellian.blogs.bucknell.edu/).
+This app combines all media sources at Bucknell together and renders news according to your preferences.
 
 # License
 Copyright (c) 2013 Li Li (http://boolli.github.io), under the
