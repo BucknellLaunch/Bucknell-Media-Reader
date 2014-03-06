@@ -1,5 +1,6 @@
 package com.example.bucknellian;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.app.ActionBar;
@@ -20,15 +21,31 @@ import com.example.bucknellian.views.newsFragment;
 public class MainActivity extends Activity {
 
 	private MainActivity local;
+	private List<RssItem> rssItems;
+	RssItemAdapter<RssItem> adapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		local = this;
+		this.rssItems = new ArrayList<RssItem>();
+
+		this.adapter = new RssItemAdapter<RssItem>(local,
+				R.layout.rss_row_view, rssItems);
+
+		// Get references to the Fragments
+		FragmentManager fm = getFragmentManager();
+		// find the fragment
+		newsFragment bucknellianNewsFragment = (newsFragment) fm
+				.findFragmentById(R.id.BucknellianNewsFragment);
+		// set listItems variable in bucknellianNewsFragment for local
+		// reference
+		bucknellianNewsFragment.setListItems(rssItems);
+		// set adapter
+		bucknellianNewsFragment.setListAdapter(adapter);
 
 		GetRSSDataTask task = new GetRSSDataTask("Bucknellian.jpg");
-
 		task.execute("http://bucknellian.net/category/news/feed/");
 
 		Log.d("RssReader", Thread.currentThread().getName());
@@ -52,12 +69,18 @@ public class MainActivity extends Activity {
 		@Override
 		protected List<RssItem> doInBackground(String... urls) {
 
+			loadMainScreen();
+			// setTabs();
+
+			// Create a list adapter
+
 			// Debug the task thread name
 			Log.d("RssReader", Thread.currentThread().getName());
 
 			try {
 				// Create RSS reader
-				RssReader rssReader = new RssReader(urls[0], this.icon);
+				RssReader rssReader = new RssReader(urls[0], this.icon,
+						rssItems, adapter);
 
 				// Parse RSS, get items
 				return rssReader.getItems();
@@ -71,24 +94,6 @@ public class MainActivity extends Activity {
 
 		@Override
 		protected void onPostExecute(List<RssItem> result) {
-
-			loadMainScreen();
-			setTabs();
-
-			// Create a list adapter
-			RssItemAdapter<RssItem> adapter = new RssItemAdapter<RssItem>(
-					local, R.layout.rss_row_view, result);
-
-			// Get references to the Fragments
-			FragmentManager fm = getFragmentManager();
-			// find the fragment
-			newsFragment bucknellianNewsFragment = (newsFragment) fm
-					.findFragmentById(R.id.BucknellianNewsFragment);
-			// set listItems variable in bucknellianNewsFragment for local
-			// reference
-			bucknellianNewsFragment.setListItems(result);
-			// set adapter
-			bucknellianNewsFragment.setListAdapter(adapter);
 
 		}
 

@@ -1,9 +1,10 @@
 package com.example.bucknellian.util;
-import java.util.ArrayList;
 import java.util.List;
+
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
+
 import com.example.bucknellian.data.RssItem;
 
 public class RssParseHandler extends DefaultHandler {
@@ -18,9 +19,11 @@ public class RssParseHandler extends DefaultHandler {
     // Parsing link indicator
     private boolean parsingLink;
     private String icon;
+    private RssItemAdapter<RssItem> rssItemAdapter;
     
-    public RssParseHandler(String icon) {
-        rssItems = new ArrayList<RssItem>();
+    public RssParseHandler(String icon, List<RssItem> rssItems, RssItemAdapter<RssItem> rssItemAdapter) {
+        this.rssItems = rssItems;
+        this.rssItemAdapter = rssItemAdapter;
         this.icon = icon;
     }
     
@@ -46,6 +49,7 @@ public class RssParseHandler extends DefaultHandler {
         if ("item".equals(qName)) {
         	currentItem.setIcon(this.icon);
             rssItems.add(currentItem);
+            this.rssItemAdapter.notifyDataSetChanged();
             currentItem = null;
         } else if ("title".equals(qName)) {
             parsingTitle = false;
