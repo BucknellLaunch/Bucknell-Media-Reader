@@ -19,11 +19,11 @@ public class RssParseHandler extends DefaultHandler {
     // Parsing link indicator
     private boolean parsingLink;
     private String icon;
-    private RssItemAdapter<RssItem> rssItemAdapter;
+    private GetRSSDataTask task;
     
-    public RssParseHandler(String icon, List<RssItem> rssItems, RssItemAdapter<RssItem> rssItemAdapter) {
+    public RssParseHandler(String icon, List<RssItem> rssItems, GetRSSDataTask task) {
         this.rssItems = rssItems;
-        this.rssItemAdapter = rssItemAdapter;
+        this.task = task;
         this.icon = icon;
     }
     
@@ -49,7 +49,7 @@ public class RssParseHandler extends DefaultHandler {
         if ("item".equals(qName)) {
         	currentItem.setIcon(this.icon);
             rssItems.add(currentItem);
-            this.rssItemAdapter.notifyDataSetChanged();
+            this.task.publicPublishProgress();
             currentItem = null;
         } else if ("title".equals(qName)) {
             parsingTitle = false;

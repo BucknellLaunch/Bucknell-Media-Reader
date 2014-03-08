@@ -12,20 +12,21 @@ public class RssReader {
 	private String rssUrl;
 	private String icon;
 	private List<RssItem> rssItems;
-	private RssItemAdapter<RssItem> rssItemAdapter;
+	private GetRSSDataTask task;
 	
 	
-	public RssReader(String rssUrl, String icon, List<RssItem> rssItems, RssItemAdapter<RssItem> rssItemAdapter) {
+	public RssReader(String rssUrl, String icon, List<RssItem> rssItems, GetRSSDataTask task) {
 		this.rssUrl = rssUrl;
 		this.icon = icon;
-		this.rssItemAdapter = rssItemAdapter;
+		this.task = task;
 	}
 	
+
 	public List<RssItem> getItems() throws Exception {
 		SAXParserFactory factory = SAXParserFactory.newInstance();
 		
 		SAXParser saxParser = factory.newSAXParser();
-		RssParseHandler handler = new RssParseHandler(this.icon, this.rssItems, this.rssItemAdapter);
+		RssParseHandler handler = new RssParseHandler(this.icon, this.rssItems, this.task);
 		saxParser.parse(rssUrl, handler);
 		return handler.getItems();
 		
