@@ -1,23 +1,25 @@
 package com.example.bucknellian.data;
 
+
 public class RssItem implements com.example.bucknellian.util.ListItem{
 	private String title;
 	private String link;
 	private String icon;
-	private String lastBuildDate;
+	private String pubDate;
 	
-	public String getLastBuildDate() {
-		return lastBuildDate;
+	public String getPubDate() {
+		return pubDate;
 	}
 
 	public void setLastBuildDate(String lastBuildDate) {
-		this.lastBuildDate = lastBuildDate;
+		this.pubDate = lastBuildDate;
 	}
 
 	public RssItem(RssItem another){
 		this.title = another.title;
 		this.link = another.link;
 		this.icon = another.icon;
+		this.pubDate = another.pubDate;
 	}
 	
 	public RssItem(){
@@ -44,7 +46,7 @@ public class RssItem implements com.example.bucknellian.util.ListItem{
 	}
 	
 	public String toString(){
-		return title;
+		return title + " " + this.getPubDate();
 	}
 	@Override
 	public String setIcon() {

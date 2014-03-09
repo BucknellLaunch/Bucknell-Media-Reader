@@ -24,7 +24,7 @@ public class RssParseHandler extends DefaultHandler {
 	// Parsing link indicator
 	private boolean parsingLink;
 	// Parsing lastBuildDate indicator
-	private boolean parsingLastBuildDate;
+	private boolean parsingPubDate;
 	private String icon;
 	private GetRSSDataTask task;
 	private Activity activity;
@@ -52,8 +52,8 @@ public class RssParseHandler extends DefaultHandler {
 			parsingTitle = true;
 		} else if ("link".equals(qName)) {
 			parsingLink = true;
-		} else if ("lastBuildDate".equals(qName)) {
-			parsingLastBuildDate = true;
+		} else if ("pubDate".equals(qName)) {
+			parsingPubDate = true;
 		}
 	}
 
@@ -73,14 +73,13 @@ public class RssParseHandler extends DefaultHandler {
 					task.publicPublishProgress();
 				}
 			});
-
 			currentItem = null;
 		} else if ("title".equals(qName)) {
 			parsingTitle = false;
 		} else if ("link".equals(qName)) {
 			parsingLink = false;
-		} else if ("lastBuildDate".equals(qName)) {
-			parsingLastBuildDate = false;
+		} else if ("pubDate".equals(qName)) {
+			parsingPubDate = false;
 		}
 	}
 
@@ -95,10 +94,10 @@ public class RssParseHandler extends DefaultHandler {
 				currentItem.setLink(new String(ch, start, length));
 				parsingLink = false;
 			}
-		} else if (parsingLastBuildDate) {
+		} else if (parsingPubDate) {
 			if (currentItem != null) {
 				currentItem.setLastBuildDate(new String(ch, start, length));
-				parsingLastBuildDate = false;
+				parsingPubDate = false;
 			}
 		}
 	}
