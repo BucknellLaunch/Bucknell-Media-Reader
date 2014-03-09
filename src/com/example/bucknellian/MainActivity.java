@@ -48,9 +48,13 @@ public class MainActivity extends Activity {
 		
 		loadMainScreen();
 
-		GetRSSDataTask task = new GetRSSDataTask(this.rssItems, this.adapter, "Bucknellian.jpg");
-		task.execute("http://bucknellian.net/category/news/feed/");
-
+		GetRSSDataTask bucknellianTask = new GetRSSDataTask(this.rssItems, this.adapter, "Bucknellian.jpg", local);
+		bucknellianTask.execute("http://bucknellian.net/category/news/feed/");
+		
+		
+		GetRSSDataTask campusVinylTask = new GetRSSDataTask(this.rssItems, this.adapter, "CampusVinyl.jpg", local);
+		campusVinylTask.execute("http://feeds.feedburner.com/CampusVinyl");
+		
 		Log.d("RssReader", Thread.currentThread().getName());
 	}
 	

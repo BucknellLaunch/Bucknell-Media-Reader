@@ -5,6 +5,16 @@ public class RssItem implements com.example.bucknellian.util.ListItem{
 	private String link;
 	private String icon;
 	
+	public RssItem(RssItem another){
+		this.title = another.title;
+		this.link = another.link;
+		this.icon = another.icon;
+	}
+	
+	public RssItem(){
+		
+	}
+	
 	public String getIcon() {
 		return icon;
 	}

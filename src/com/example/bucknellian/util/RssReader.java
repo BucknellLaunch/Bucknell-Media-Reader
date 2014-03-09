@@ -5,32 +5,38 @@ import java.util.List;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+import android.app.Activity;
+
 import com.example.bucknellian.data.RssItem;
 
 public class RssReader {
-	
+
 	private String rssUrl;
 	private String icon;
 	private List<RssItem> rssItems;
 	private GetRSSDataTask task;
-	
-	
-	public RssReader(String rssUrl, String icon, List<RssItem> rssItems, GetRSSDataTask task) {
+
+	private Activity activity;
+
+	public RssReader(String rssUrl, String icon, List<RssItem> rssItems,
+			GetRSSDataTask task, Activity activity) {
 		this.rssUrl = rssUrl;
 		this.icon = icon;
 		this.task = task;
+		this.rssItems = rssItems;
+		this.activity = activity;
+
 	}
-	
 
 	public List<RssItem> getItems() throws Exception {
 		SAXParserFactory factory = SAXParserFactory.newInstance();
-		
+
 		SAXParser saxParser = factory.newSAXParser();
-		RssParseHandler handler = new RssParseHandler(this.icon, this.rssItems, this.task);
+		RssParseHandler handler = new RssParseHandler(this.icon, this.rssItems,
+				this.task, this.activity);
 		saxParser.parse(rssUrl, handler);
 		return handler.getItems();
-		
-		
+
 	}
 
 }

@@ -2,6 +2,7 @@ package com.example.bucknellian.util;
 
 import java.util.List;
 
+import android.app.Activity;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -13,12 +14,15 @@ public class GetRSSDataTask extends AsyncTask<String, Void, Void> {
 	private RssReader rssReader;
 	private RssItemAdapter<RssItem> adapter;
 	private List<RssItem> rssItems;
+	private Activity activity;
 
-	public GetRSSDataTask(List<RssItem> rssItems, RssItemAdapter<RssItem> adapter, String icon) {
+	public GetRSSDataTask(List<RssItem> rssItems, RssItemAdapter<RssItem> adapter, String icon, Activity activity) {
 		super();
 		this.icon = icon;
 		this.adapter = adapter;
 		this.rssItems = rssItems;
+		this.activity = activity;
+		
 	}
 
 	@Override
@@ -33,7 +37,7 @@ public class GetRSSDataTask extends AsyncTask<String, Void, Void> {
 
 		// Create a list adapter
 		this.rssReader = new RssReader(urls[0], this.icon,
-				this.rssItems, this);
+				this.rssItems, this,this.activity);
 		// Debug the task thread name
 		Log.d("RssReader", Thread.currentThread().getName());
 
@@ -44,7 +48,7 @@ public class GetRSSDataTask extends AsyncTask<String, Void, Void> {
 			rssReader.getItems();
 
 		} catch (Exception e) {
-			Log.e("RssReader", e.getMessage());
+			e.printStackTrace();
 		}
 		return null;
 	}
@@ -56,10 +60,8 @@ public class GetRSSDataTask extends AsyncTask<String, Void, Void> {
 	@Override
 	protected void onProgressUpdate(Void... values) {
 		this.adapter.notifyDataSetChanged();
-		
 	}
 	@Override
 	protected void onPostExecute(Void result) {
-
 	}
 }
