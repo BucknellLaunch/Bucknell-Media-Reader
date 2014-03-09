@@ -7,7 +7,6 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,7 +15,6 @@ import android.view.ViewGroup;
 import com.example.bucknellian.data.RssItem;
 import com.example.bucknellian.util.GetRSSDataTask;
 import com.example.bucknellian.util.RssItemAdapter;
-import com.example.bucknellian.util.RssReader;
 import com.example.bucknellian.views.newsFragment;
 
 public class MainActivity extends Activity {

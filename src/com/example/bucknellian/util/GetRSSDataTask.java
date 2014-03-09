@@ -42,8 +42,6 @@ public class GetRSSDataTask extends AsyncTask<String, Void, Void> {
 		Log.d("RssReader", Thread.currentThread().getName());
 
 		try {
-			// Create RSS reader
-
 			// Parse RSS, get items
 			rssReader.getItems();
 

@@ -28,15 +28,13 @@ public class RssReader {
 
 	}
 
-	public List<RssItem> getItems() throws Exception {
+	public void getItems() throws Exception {
 		SAXParserFactory factory = SAXParserFactory.newInstance();
 
 		SAXParser saxParser = factory.newSAXParser();
 		RssParseHandler handler = new RssParseHandler(this.icon, this.rssItems,
 				this.task, this.activity);
 		saxParser.parse(rssUrl, handler);
-		return handler.getItems();
-
 	}
 
 }
