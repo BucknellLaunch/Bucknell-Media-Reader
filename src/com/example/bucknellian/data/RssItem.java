@@ -4,7 +4,16 @@ public class RssItem implements com.example.bucknellian.util.ListItem{
 	private String title;
 	private String link;
 	private String icon;
+	private String lastBuildDate;
 	
+	public String getLastBuildDate() {
+		return lastBuildDate;
+	}
+
+	public void setLastBuildDate(String lastBuildDate) {
+		this.lastBuildDate = lastBuildDate;
+	}
+
 	public RssItem(RssItem another){
 		this.title = another.title;
 		this.link = another.link;
