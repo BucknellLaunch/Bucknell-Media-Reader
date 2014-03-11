@@ -5,10 +5,10 @@ import java.util.List;
 import android.app.Activity;
 import android.app.ListFragment;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 
-import com.example.bucknellian.BlogView;
 import com.example.bucknellian.data.RssItem;
 
 public class newsFragment extends ListFragment {
@@ -18,6 +18,13 @@ public class newsFragment extends ListFragment {
 
 	public void setListItems(List<RssItem> l) {
 		listItems = l;
+	}
+	
+	@Override
+	public void onCreate(Bundle savedInstanceState){
+		super.onCreate(savedInstanceState);
+		setRetainInstance(true);
+		
 	}
 
 	@Override
@@ -40,4 +47,5 @@ public class newsFragment extends ListFragment {
 		i.putExtra("url", listItems.get(position).getLink());
 		startActivity(i);
 	}
+	
 }

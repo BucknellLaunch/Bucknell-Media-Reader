@@ -1,4 +1,6 @@
-package com.example.bucknellian;
+package com.example.bucknellian.views;
+
+import com.example.bucknellian.R;
 
 import android.app.Activity;
 import android.os.Bundle;

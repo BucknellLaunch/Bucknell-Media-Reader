@@ -1,7 +1,7 @@
 package com.example.bucknellian.data;
 
 
-public class RssItem implements com.example.bucknellian.util.ListItem{
+public class RssItem implements com.example.bucknellian.data.ListItem{
 	private String title;
 	private String link;
 	private String icon;

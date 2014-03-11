@@ -1,4 +1,4 @@
-package com.example.bucknellian.util;
+package com.example.bucknellian.data;
 
 public interface ListItem {
 	public String getIcon();
