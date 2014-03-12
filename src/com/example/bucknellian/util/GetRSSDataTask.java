@@ -15,13 +15,15 @@ public class GetRSSDataTask extends AsyncTask<String, Void, Void> {
 	private RssItemAdapter<RssItem> adapter;
 	private List<RssItem> rssItems;
 	private Activity activity;
+	private RssItemsDataSource rssItemsDataSource;
 
-	public GetRSSDataTask(List<RssItem> rssItems, RssItemAdapter<RssItem> adapter, String icon, Activity activity) {
+	public GetRSSDataTask(List<RssItem> rssItems, RssItemAdapter<RssItem> adapter, String icon, Activity activity, RssItemsDataSource rssItemsDataSource) {
 		super();
 		this.icon = icon;
 		this.adapter = adapter;
 		this.rssItems = rssItems;
 		this.activity = activity;
+		this.rssItemsDataSource = rssItemsDataSource;
 		
 	}
 
@@ -61,5 +63,7 @@ public class GetRSSDataTask extends AsyncTask<String, Void, Void> {
 	}
 	@Override
 	protected void onPostExecute(Void result) {
+		if (this.rssItemsDataSource != null)
+			this.rssItemsDataSource.addRssItems(this.rssItems);
 	}
 }

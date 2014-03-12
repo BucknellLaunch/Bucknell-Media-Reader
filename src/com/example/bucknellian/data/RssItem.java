@@ -10,6 +10,10 @@ public class RssItem implements com.example.bucknellian.data.ListItem{
 	public String getPubDate() {
 		return pubDate;
 	}
+	
+	public void setPubDate(String pubDate) {
+		this.pubDate = pubDate;
+	}
 
 	public void setLastBuildDate(String lastBuildDate) {
 		this.pubDate = lastBuildDate;
