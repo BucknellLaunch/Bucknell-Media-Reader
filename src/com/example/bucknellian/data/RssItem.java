@@ -1,5 +1,13 @@
 package com.example.bucknellian.data;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import android.util.Log;
+
+import com.example.bucknellian.util.RelativeDate;
+
 
 public class RssItem implements com.example.bucknellian.data.ListItem{
 	private String title;
@@ -7,6 +15,17 @@ public class RssItem implements com.example.bucknellian.data.ListItem{
 	private String icon;
 	private String pubDate;
 	private String category;
+
+	private static SimpleDateFormat sdf = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz");
+	
+	public Date getPubDateObject(){
+		try {
+			return RssItem.sdf.parse(this.pubDate);
+		} catch (ParseException e) {
+			Log.e("Date format error","Date format error");
+			return null;
+		}
+	}
 	
 	public String getCategory() {
 		return category;
@@ -17,7 +36,12 @@ public class RssItem implements com.example.bucknellian.data.ListItem{
 	}
 
 	public String getPubDate() {
-		return pubDate;
+		Date d = this.getPubDateObject();
+		if (d != null)
+			return RelativeDate.getRelativeDate(d);
+		else
+			return this.getPubDate();
+		//return pubDate;
 	}
 	
 	public void setPubDate(String pubDate) {

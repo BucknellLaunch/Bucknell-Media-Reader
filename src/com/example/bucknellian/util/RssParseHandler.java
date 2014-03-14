@@ -1,5 +1,6 @@
 package com.example.bucknellian.util;
 
+
 import java.util.List;
 
 import org.xml.sax.Attributes;
@@ -31,7 +32,7 @@ public class RssParseHandler extends DefaultHandler {
 	private String icon;
 	private GetRSSDataTask task;
 	private Activity activity;
-
+	
 	public RssParseHandler(String icon, List<RssItem> rssItems,
 			GetRSSDataTask task, Activity activity) {
 		this.rssItems = rssItems;
@@ -103,7 +104,7 @@ public class RssParseHandler extends DefaultHandler {
 			}
 		} else if (parsingPubDate) {
 			if (currentItem != null) {
-				currentItem.setLastBuildDate(new String(ch, start, length));
+				currentItem.setPubDate(new String(ch, start, length));
 				parsingPubDate = false;
 			}
 		} else if (parsingCategory){
