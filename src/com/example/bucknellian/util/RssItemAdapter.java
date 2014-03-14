@@ -15,9 +15,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.bucknellian.R;
-import com.example.bucknellian.data.ListItem;
+import com.example.bucknellian.data.RssItemWithIcon;
 
-public class RssItemAdapter<T extends ListItem> extends ArrayAdapter<T> {
+public class RssItemAdapter<T extends RssItemWithIcon> extends ArrayAdapter<T> {
 	public final Context context;
 
 	public RssItemAdapter(Context context, int resource, List<T> objects) {

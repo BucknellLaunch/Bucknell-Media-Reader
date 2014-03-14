@@ -4,18 +4,20 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import android.annotation.SuppressLint;
 import android.util.Log;
 
 import com.example.bucknellian.util.RelativeDate;
 
 
-public class RssItem implements com.example.bucknellian.data.ListItem{
+public class RssItem implements com.example.bucknellian.data.RssItemWithIcon, Comparable{
 	private String title;
 	private String link;
 	private String icon;
 	private String pubDate;
 	private String category;
 
+	@SuppressLint("SimpleDateFormat")
 	private static SimpleDateFormat sdf = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz");
 	
 	public Date getPubDateObject(){
@@ -86,11 +88,14 @@ public class RssItem implements com.example.bucknellian.data.ListItem{
 	public String toString(){
 		return "[" + category + "] " + title + " " + this.getPubDate();
 	}
+
 	@Override
-	public String setIcon() {
+	public int compareTo(Object another) {
 		// TODO Auto-generated method stub
-		return null;
+		return 0;
 	}
+
+
 	
 	
 }

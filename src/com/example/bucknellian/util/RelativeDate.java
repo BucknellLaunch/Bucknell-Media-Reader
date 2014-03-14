@@ -1,5 +1,6 @@
 package com.example.bucknellian.util;
 
+import android.annotation.SuppressLint;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -12,7 +13,8 @@ import java.util.GregorianCalendar;
  */
 public class RelativeDate {
  
-    private static SimpleDateFormat sdf = new SimpleDateFormat( "h:mm a MMM dd, yyyy" );
+    @SuppressLint("SimpleDateFormat")
+	private static SimpleDateFormat sdf = new SimpleDateFormat( "h:mm a MMM dd, yyyy" );
  
     /**
      * This method computes the relative date according to
