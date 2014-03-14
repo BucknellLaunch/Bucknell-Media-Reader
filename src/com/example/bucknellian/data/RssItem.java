@@ -6,7 +6,16 @@ public class RssItem implements com.example.bucknellian.data.ListItem{
 	private String link;
 	private String icon;
 	private String pubDate;
+	private String category;
 	
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
 	public String getPubDate() {
 		return pubDate;
 	}
@@ -24,6 +33,7 @@ public class RssItem implements com.example.bucknellian.data.ListItem{
 		this.link = another.link;
 		this.icon = another.icon;
 		this.pubDate = another.pubDate;
+		this.category = another.category;
 	}
 	
 	public RssItem(){
@@ -50,7 +60,7 @@ public class RssItem implements com.example.bucknellian.data.ListItem{
 	}
 	
 	public String toString(){
-		return title + " " + this.getPubDate();
+		return "[" + category + "] " + title + " " + this.getPubDate();
 	}
 	@Override
 	public String setIcon() {

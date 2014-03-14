@@ -17,7 +17,8 @@ public class RssItemsDataSource {
 	private RssSQLiteHelper dbHelper;
 	private String[] allColumns = { RssSQLiteHelper.COLUMN_ID,
 			RssSQLiteHelper.COLUMN_TITLE, RssSQLiteHelper.COLUMN_LINK,
-			RssSQLiteHelper.COLUMN_ICON, RssSQLiteHelper.COLUMN_PUB_DATE };
+			RssSQLiteHelper.COLUMN_ICON, RssSQLiteHelper.COLUMN_PUB_DATE,
+			RssSQLiteHelper.COLUMN_CATEGORY };
 
 	public RssItemsDataSource(Context context) {
 		dbHelper = new RssSQLiteHelper(context);
@@ -44,6 +45,7 @@ public class RssItemsDataSource {
 		values.put(RssSQLiteHelper.COLUMN_LINK, item.getLink());
 		values.put(RssSQLiteHelper.COLUMN_ICON, item.getIcon());
 		values.put(RssSQLiteHelper.COLUMN_PUB_DATE, item.getPubDate());
+		values.put(RssSQLiteHelper.COLUMN_CATEGORY, item.getCategory());
 
 		long insertId = database.insert(RssSQLiteHelper.TABLE_RSS_ITEMS, null,
 				values);
@@ -52,9 +54,9 @@ public class RssItemsDataSource {
 		else
 			return null;
 	}
-	
-	public void addRssItems(List<RssItem> items){
-		for (RssItem item: items){
+
+	public void addRssItems(List<RssItem> items) {
+		for (RssItem item : items) {
 			addRssItem(item);
 		}
 	}
@@ -65,23 +67,25 @@ public class RssItemsDataSource {
 
 	public List<RssItem> getAllRssItems() {
 		List<RssItem> items = new ArrayList<RssItem>();
-		
-		Cursor cursor = database.query(RssSQLiteHelper.TABLE_RSS_ITEMS, allColumns, null, null, null, null, null);
+
+		Cursor cursor = database.query(RssSQLiteHelper.TABLE_RSS_ITEMS,
+				allColumns, null, null, null, null, null);
 		cursor.moveToFirst();
-	    while (!cursor.isAfterLast()) {
-	        RssItem item = cursorToRssItem(cursor);
-	        items.add(item);
-	        cursor.moveToNext();
-	      }
-	      // make sure to close the cursor
-	      cursor.close();
-	      
-	      return items;
+		while (!cursor.isAfterLast()) {
+			RssItem item = cursorToRssItem(cursor);
+			items.add(item);
+			cursor.moveToNext();
+		}
+		// make sure to close the cursor
+		cursor.close();
+
+		return items;
 	}
-	
-	public boolean isDatabaseEmpty(){
+
+	public boolean isDatabaseEmpty() {
 		boolean isEmpty = true;
-		Cursor cursor = database.rawQuery("SELECT * FROM " + RssSQLiteHelper.TABLE_RSS_ITEMS, null);
+		Cursor cursor = database.rawQuery("SELECT * FROM "
+				+ RssSQLiteHelper.TABLE_RSS_ITEMS, null);
 		if (cursor.moveToFirst())
 			isEmpty = false;
 		return isEmpty;
@@ -93,10 +97,9 @@ public class RssItemsDataSource {
 		item.setLink(cursor.getString(2));
 		item.setIcon(cursor.getString(3));
 		item.setPubDate(cursor.getString(4));
-		
+		item.setCategory(cursor.getString(5));
+
 		return item;
 	}
-	
-	
 
 }
