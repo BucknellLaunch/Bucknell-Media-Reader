@@ -10,6 +10,7 @@ import org.xml.sax.helpers.DefaultHandler;
 import android.app.Activity;
 
 import com.example.bucknellian.data.RssItem;
+import com.example.bucknellian.data.SortedArrayList;
 
 public class RssParseHandler extends DefaultHandler {
 

@@ -1,4 +1,4 @@
-package com.example.bucknellian.util;
+package com.example.bucknellian.data;
 
 import java.util.ArrayList;
 import java.util.Collections;

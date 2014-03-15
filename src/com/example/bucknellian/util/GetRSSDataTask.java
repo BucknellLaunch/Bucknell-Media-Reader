@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.example.bucknellian.data.RssItem;
+import com.example.bucknellian.data.SortedArrayList;
 
 public class GetRSSDataTask extends AsyncTask<String, Void, Void> {
 

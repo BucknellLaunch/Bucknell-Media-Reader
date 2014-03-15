@@ -12,10 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.bucknellian.data.RssItem;
+import com.example.bucknellian.data.SortedArrayList;
 import com.example.bucknellian.util.GetRSSDataTask;
 import com.example.bucknellian.util.RssItemAdapter;
 import com.example.bucknellian.util.RssItemsDataSource;
-import com.example.bucknellian.util.SortedArrayList;
 import com.example.bucknellian.views.newsFragment;
 
 public class MainActivity extends Activity {
@@ -24,6 +24,7 @@ public class MainActivity extends Activity {
 	private SortedArrayList<RssItem> rssItems;
 	private RssItemAdapter<RssItem> adapter;
 	public RssItemsDataSource rssItemsDataSource;
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

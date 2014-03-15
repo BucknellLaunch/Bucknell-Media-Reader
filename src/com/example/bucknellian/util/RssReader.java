@@ -1,6 +1,5 @@
 package com.example.bucknellian.util;
 
-import java.util.List;
 
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
@@ -8,6 +7,7 @@ import javax.xml.parsers.SAXParserFactory;
 import android.app.Activity;
 
 import com.example.bucknellian.data.RssItem;
+import com.example.bucknellian.data.SortedArrayList;
 
 public class RssReader {
 
