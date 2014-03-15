@@ -14,19 +14,88 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.example.bucknellian.R;
 import com.example.bucknellian.data.RssItem;
+import com.example.bucknellian.data.SortedArrayList;
+import com.example.bucknellian.util.GetRSSDataTask;
+import com.example.bucknellian.util.RssItemAdapter;
+import com.example.bucknellian.util.RssItemsDataSource;
 
 public class newsFragment extends ListFragment implements OnRefreshListener {
 	// listItems and activity are used for calling new activities
 	List<RssItem> listItems;
 	Activity activity;
-
 	private PullToRefreshLayout pullToRefreshLayout;
+	
+	private SortedArrayList<RssItem> rssItems;
+	private RssItemAdapter<RssItem> adapter;
+	public RssItemsDataSource rssItemsDataSource;
 
 	public void setListItems(List<RssItem> l) {
 		listItems = l;
 	}
 
+	@Override
+	public void onAttach(Activity a) {
+		super.onAttach(a);
+		activity = a;
+	}
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setRetainInstance(true);
+		
+		this.rssItems = new SortedArrayList<RssItem>();
+		this.adapter = new RssItemAdapter<RssItem>(getActivity(),
+				R.layout.rss_row_view, rssItems);
+		
+		this.rssItemsDataSource = new RssItemsDataSource(getActivity());
+		this.rssItemsDataSource.open();
+		
+		this.setListItems(rssItems);
+		this.setListAdapter(adapter);
+		updateRss();
+	}
+	
+	public void updateRss(){
+		if (rssItemsDataSource.isDatabaseEmpty()) {
+			Log.e("Read New Rss", "Read New Rss");
+			GetRSSDataTask bucknellianTask = new GetRSSDataTask(this.rssItems,
+					this.adapter, "Bucknellian.jpg", getActivity(), null);
+			bucknellianTask
+					.execute("http://bucknellian.net/category/news/feed/");
+
+			GetRSSDataTask campusVinylTask = new GetRSSDataTask(this.rssItems,
+					this.adapter, "CampusVinyl.jpg", getActivity(),
+					this.rssItemsDataSource);
+			campusVinylTask.execute("http://feeds.feedburner.com/CampusVinyl");
+		} else {
+			Log.e("Read Old Rss", "Read Old Rss");
+			List<RssItem> oldItems = rssItemsDataSource.getAllRssItems();
+			for (RssItem item : oldItems) {
+				// need to change this line
+				this.rssItems.insertSorted(item);
+				adapter.notifyDataSetChanged();
+			}
+		}
+	}
+	
+	
+
+	@Override
+	public void onResume() {
+		rssItemsDataSource.open();
+		super.onResume();
+	}
+
+	@Override
+	public void onPause() {
+		rssItemsDataSource.close();
+		super.onPause();
+	}
+	
+	
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
@@ -45,19 +114,6 @@ public class newsFragment extends ListFragment implements OnRefreshListener {
 				.theseChildrenArePullable(getListView(),
 						getListView().getEmptyView()).listener(this)
 				.setup(pullToRefreshLayout);
-	}
-
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setRetainInstance(true);
-
-	}
-
-	@Override
-	public void onAttach(Activity a) {
-		super.onAttach(a);
-		activity = a;
 	}
 
 	// create a new activity when items are clicked
@@ -80,7 +136,7 @@ public class newsFragment extends ListFragment implements OnRefreshListener {
 
 	@Override
 	public void onRefreshStarted(View view) {
-		Log.e("Pull Working", "Pull Working");
+		updateRss();
 		pullToRefreshLayout.setRefreshComplete();
 	}
 
