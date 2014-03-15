@@ -1,6 +1,5 @@
 package com.example.bucknellian.util;
 
-import java.util.List;
 
 import android.app.Activity;
 import android.os.AsyncTask;
@@ -13,11 +12,11 @@ public class GetRSSDataTask extends AsyncTask<String, Void, Void> {
 	private String icon;
 	private RssReader rssReader;
 	private RssItemAdapter<RssItem> adapter;
-	private List<RssItem> rssItems;
+	private SortedArrayList<RssItem> rssItems;
 	private Activity activity;
 	private RssItemsDataSource rssItemsDataSource;
 
-	public GetRSSDataTask(List<RssItem> rssItems, RssItemAdapter<RssItem> adapter, String icon, Activity activity, RssItemsDataSource rssItemsDataSource) {
+	public GetRSSDataTask(SortedArrayList<RssItem> rssItems, RssItemAdapter<RssItem> adapter, String icon, Activity activity, RssItemsDataSource rssItemsDataSource) {
 		super();
 		this.icon = icon;
 		this.adapter = adapter;

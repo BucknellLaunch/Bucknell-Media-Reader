@@ -10,7 +10,7 @@ import android.util.Log;
 import com.example.bucknellian.util.RelativeDate;
 
 
-public class RssItem implements com.example.bucknellian.data.RssItemWithIcon, Comparable{
+public class RssItem implements com.example.bucknellian.data.RssItemWithIcon, Comparable<RssItem>{
 	private String title;
 	private String link;
 	private String icon;
@@ -19,6 +19,8 @@ public class RssItem implements com.example.bucknellian.data.RssItemWithIcon, Co
 
 	@SuppressLint("SimpleDateFormat")
 	private static SimpleDateFormat sdf = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz");
+	//"EEE, dd MMM yyyy HH:mm:ss zzz"
+	//"HH:mm aa MMM dd, yyyy"
 	
 	public Date getPubDateObject(){
 		try {
@@ -37,7 +39,7 @@ public class RssItem implements com.example.bucknellian.data.RssItemWithIcon, Co
 		this.category = category;
 	}
 
-	public String getPubDate() {
+	public String getRelativePubDate() {
 		Date d = this.getPubDateObject();
 		if (d != null)
 			return RelativeDate.getRelativeDate(d);
@@ -45,6 +47,11 @@ public class RssItem implements com.example.bucknellian.data.RssItemWithIcon, Co
 			return this.getPubDate();
 		//return pubDate;
 	}
+	
+	public String getPubDate(){
+		return this.pubDate;
+	}
+	
 	
 	public void setPubDate(String pubDate) {
 		this.pubDate = pubDate;
@@ -86,13 +93,14 @@ public class RssItem implements com.example.bucknellian.data.RssItemWithIcon, Co
 	}
 	
 	public String toString(){
-		return "[" + category + "] " + title + " " + this.getPubDate();
+		return "[" + category + "] " + title + " " + this.getRelativePubDate();
 	}
 
 	@Override
-	public int compareTo(Object another) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int compareTo(RssItem another) {
+		Date currentDate = this.getPubDateObject();
+		Date otherDate = another.getPubDateObject();
+		return currentDate.compareTo(otherDate);
 	}
 
 

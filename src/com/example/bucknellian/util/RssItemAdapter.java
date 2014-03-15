@@ -25,7 +25,6 @@ public class RssItemAdapter<T extends RssItemWithIcon> extends ArrayAdapter<T> {
 		this.context = context;
 
 	}
-
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 

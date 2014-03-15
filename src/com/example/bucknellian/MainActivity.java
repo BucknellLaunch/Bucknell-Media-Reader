@@ -1,6 +1,5 @@
 package com.example.bucknellian;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import android.app.ActionBar;
@@ -16,12 +15,13 @@ import com.example.bucknellian.data.RssItem;
 import com.example.bucknellian.util.GetRSSDataTask;
 import com.example.bucknellian.util.RssItemAdapter;
 import com.example.bucknellian.util.RssItemsDataSource;
+import com.example.bucknellian.util.SortedArrayList;
 import com.example.bucknellian.views.newsFragment;
 
 public class MainActivity extends Activity {
 
 	private MainActivity local;
-	private List<RssItem> rssItems;
+	private SortedArrayList<RssItem> rssItems;
 	private RssItemAdapter<RssItem> adapter;
 	public RssItemsDataSource rssItemsDataSource;
 
@@ -30,7 +30,7 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		local = this;
-		this.rssItems = new ArrayList<RssItem>();
+		this.rssItems = new SortedArrayList<RssItem>();
 		this.adapter = new RssItemAdapter<RssItem>(local,
 				R.layout.rss_row_view, rssItems);
 		
@@ -63,7 +63,8 @@ public class MainActivity extends Activity {
 			Log.e("Read Old Rss", "Read Old Rss");
 			List<RssItem> oldItems = rssItemsDataSource.getAllRssItems();
 			for (RssItem item: oldItems){
-				this.rssItems.add(item);
+				// need to change this line
+				this.rssItems.insertSorted(item);
 				adapter.notifyDataSetChanged();
 			}
 			

@@ -13,7 +13,7 @@ import com.example.bucknellian.data.RssItem;
 
 public class RssParseHandler extends DefaultHandler {
 
-	private List<RssItem> rssItems;
+	private SortedArrayList<RssItem> rssItems;
 	// We have a local reference to an object which is constructed while parser
 	// is working on an item tag
 	// Used to reference item while parsing
@@ -33,7 +33,7 @@ public class RssParseHandler extends DefaultHandler {
 	private GetRSSDataTask task;
 	private Activity activity;
 	
-	public RssParseHandler(String icon, List<RssItem> rssItems,
+	public RssParseHandler(String icon, SortedArrayList<RssItem> rssItems,
 			GetRSSDataTask task, Activity activity) {
 		this.rssItems = rssItems;
 		this.task = task;
@@ -75,7 +75,7 @@ public class RssParseHandler extends DefaultHandler {
 
 			this.activity.runOnUiThread(new RssUpdateRunnable(newItem) {
 				public void run() {
-					rssItems.add(this.item);
+					rssItems.insertSorted(this.item);
 					task.publicPublishProgress();
 				}
 			});
