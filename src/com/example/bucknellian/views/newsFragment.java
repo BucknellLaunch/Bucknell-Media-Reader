@@ -57,7 +57,7 @@ public class newsFragment extends ListFragment implements OnRefreshListener {
 		this.setListAdapter(adapter);
 
 		// if there is something in the database, display them first.
-		if (rssItemsDataSource.isDatabaseEmpty()) {
+		if (!rssItemsDataSource.isDatabaseEmpty()) {
 			Log.e("Read Old Rss", "Read Old Rss");
 			List<RssItem> oldItems = rssItemsDataSource.getAllRssItems();
 			for (RssItem item : oldItems) {
@@ -65,15 +65,16 @@ public class newsFragment extends ListFragment implements OnRefreshListener {
 				this.rssItems.insertSorted(item);
 				adapter.notifyDataSetChanged();
 			}
+			// check if it needs to update the RSS
+			// call RssUpdateChecker;
 		}
-
-		updateRss();
+		else
+			// maybe need to move this method into a seperate class
+			updateRss();
+		
 	}
 
 	public void updateRss() {
-		// checks whether there are new RSS available
-		
-		// if there is something available, do the things below
 		Log.e("Read New Rss", "Read New Rss");
 		GetRSSDataTask bucknellianTask = new GetRSSDataTask(this.rssItems,
 				this.adapter, "Bucknellian.jpg", getActivity(), null);
@@ -83,8 +84,6 @@ public class newsFragment extends ListFragment implements OnRefreshListener {
 				this.adapter, "CampusVinyl.jpg", getActivity(),
 				this.rssItemsDataSource);
 		campusVinylTask.execute("http://feeds.feedburner.com/CampusVinyl");
-		
-		// otherwise, do nothing
 	}
 
 	@Override
