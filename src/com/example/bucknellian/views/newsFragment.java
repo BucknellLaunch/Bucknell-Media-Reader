@@ -26,7 +26,7 @@ public class newsFragment extends ListFragment implements OnRefreshListener {
 	List<RssItem> listItems;
 	Activity activity;
 	private PullToRefreshLayout pullToRefreshLayout;
-	
+
 	private SortedArrayList<RssItem> rssItems;
 	private RssItemAdapter<RssItem> adapter;
 	public RssItemsDataSource rssItemsDataSource;
@@ -45,32 +45,19 @@ public class newsFragment extends ListFragment implements OnRefreshListener {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setRetainInstance(true);
-		
+
 		this.rssItems = new SortedArrayList<RssItem>();
 		this.adapter = new RssItemAdapter<RssItem>(getActivity(),
 				R.layout.rss_row_view, rssItems);
-		
+
 		this.rssItemsDataSource = new RssItemsDataSource(getActivity());
 		this.rssItemsDataSource.open();
-		
+
 		this.setListItems(rssItems);
 		this.setListAdapter(adapter);
-		updateRss();
-	}
-	
-	public void updateRss(){
-		if (rssItemsDataSource.isDatabaseEmpty()) {
-			Log.e("Read New Rss", "Read New Rss");
-			GetRSSDataTask bucknellianTask = new GetRSSDataTask(this.rssItems,
-					this.adapter, "Bucknellian.jpg", getActivity(), null);
-			bucknellianTask
-					.execute("http://bucknellian.net/category/news/feed/");
 
-			GetRSSDataTask campusVinylTask = new GetRSSDataTask(this.rssItems,
-					this.adapter, "CampusVinyl.jpg", getActivity(),
-					this.rssItemsDataSource);
-			campusVinylTask.execute("http://feeds.feedburner.com/CampusVinyl");
-		} else {
+		// if there is something in the database, display them first.
+		if (rssItemsDataSource.isDatabaseEmpty()) {
 			Log.e("Read Old Rss", "Read Old Rss");
 			List<RssItem> oldItems = rssItemsDataSource.getAllRssItems();
 			for (RssItem item : oldItems) {
@@ -79,9 +66,26 @@ public class newsFragment extends ListFragment implements OnRefreshListener {
 				adapter.notifyDataSetChanged();
 			}
 		}
+
+		updateRss();
 	}
-	
-	
+
+	public void updateRss() {
+		// checks whether there are new RSS available
+		
+		// if there is something available, do the things below
+		Log.e("Read New Rss", "Read New Rss");
+		GetRSSDataTask bucknellianTask = new GetRSSDataTask(this.rssItems,
+				this.adapter, "Bucknellian.jpg", getActivity(), null);
+		bucknellianTask.execute("http://bucknellian.net/category/news/feed/");
+
+		GetRSSDataTask campusVinylTask = new GetRSSDataTask(this.rssItems,
+				this.adapter, "CampusVinyl.jpg", getActivity(),
+				this.rssItemsDataSource);
+		campusVinylTask.execute("http://feeds.feedburner.com/CampusVinyl");
+		
+		// otherwise, do nothing
+	}
 
 	@Override
 	public void onResume() {
@@ -94,8 +98,7 @@ public class newsFragment extends ListFragment implements OnRefreshListener {
 		rssItemsDataSource.close();
 		super.onPause();
 	}
-	
-	
+
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);

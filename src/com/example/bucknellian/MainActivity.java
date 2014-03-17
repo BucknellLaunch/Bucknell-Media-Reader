@@ -1,6 +1,5 @@
 package com.example.bucknellian;
 
-import java.util.List;
 
 import android.app.ActionBar;
 import android.app.Activity;
