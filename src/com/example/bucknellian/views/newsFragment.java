@@ -20,6 +20,7 @@ import com.example.bucknellian.data.SortedArrayList;
 import com.example.bucknellian.util.GetRSSDataTask;
 import com.example.bucknellian.util.RssItemAdapter;
 import com.example.bucknellian.util.RssItemsDataSource;
+import com.example.bucknellian.util.RssUpdateChecker;
 
 public class newsFragment extends ListFragment implements OnRefreshListener {
 	// listItems and activity are used for calling new activities
@@ -65,8 +66,8 @@ public class newsFragment extends ListFragment implements OnRefreshListener {
 				this.rssItems.insertSorted(item);
 				adapter.notifyDataSetChanged();
 			}
-			// check if it needs to update the RSS
-			// call RssUpdateChecker;
+			RssUpdateChecker checker = new RssUpdateChecker("http://bucknellian.net/category/news/feed/", this.rssItems);
+			checker.execute();
 		}
 		else
 			// maybe need to move this method into a seperate class
