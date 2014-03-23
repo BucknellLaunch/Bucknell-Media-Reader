@@ -66,27 +66,32 @@ public class newsFragment extends ListFragment implements OnRefreshListener {
 				this.rssItems.insertSorted(item);
 				adapter.notifyDataSetChanged();
 			}
-			RssUpdateChecker checker = new RssUpdateChecker(
-					"http://bucknellian.net/category/news/feed/",
-					this.rssItems, "Bucknellian.jpg", this.adapter,
-					this.rssItemsDataSource);
-			checker.execute();
+			
 		} else
-			// maybe need to move this method into a seperate class
-			updateRss();
+			// add new RSS
+			Log.e("Read New Rss", "Read New Rss");
+			GetRSSDataTask bucknellianTask = new GetRSSDataTask(this.rssItems,
+					this.adapter, "Bucknellian.jpg", getActivity(), null);
+			bucknellianTask.execute("http://bucknellian.net/category/news/feed/");
 
+			GetRSSDataTask campusVinylTask = new GetRSSDataTask(this.rssItems,
+					this.adapter, "CampusVinyl.jpg", getActivity(),
+					this.rssItemsDataSource);
+			campusVinylTask.execute("http://feeds.feedburner.com/CampusVinyl");
 	}
 
 	public void updateRss() {
-		Log.e("Read New Rss", "Read New Rss");
-		GetRSSDataTask bucknellianTask = new GetRSSDataTask(this.rssItems,
-				this.adapter, "Bucknellian.jpg", getActivity(), null);
-		bucknellianTask.execute("http://bucknellian.net/category/news/feed/");
-
-		GetRSSDataTask campusVinylTask = new GetRSSDataTask(this.rssItems,
-				this.adapter, "CampusVinyl.jpg", getActivity(),
+		RssUpdateChecker bucknellChecker = new RssUpdateChecker(
+				"http://bucknellian.net/category/news/feed/",
+				this.rssItems, "Bucknellian.jpg", this.adapter,
 				this.rssItemsDataSource);
-		campusVinylTask.execute("http://feeds.feedburner.com/CampusVinyl");
+		bucknellChecker.execute();
+		
+		RssUpdateChecker campusVinylChecker = new RssUpdateChecker(
+				"http://feeds.feedburner.com/CampusVinyl",
+				this.rssItems, "CampusVinyl.jpg", this.adapter,
+				this.rssItemsDataSource);
+		campusVinylChecker.execute();
 	}
 
 	@Override
