@@ -66,13 +66,15 @@ public class newsFragment extends ListFragment implements OnRefreshListener {
 				this.rssItems.insertSorted(item);
 				adapter.notifyDataSetChanged();
 			}
-			RssUpdateChecker checker = new RssUpdateChecker("http://bucknellian.net/category/news/feed/", this.rssItems);
+			RssUpdateChecker checker = new RssUpdateChecker(
+					"http://bucknellian.net/category/news/feed/",
+					this.rssItems, "Bucknellian.jpg", this.adapter,
+					this.rssItemsDataSource);
 			checker.execute();
-		}
-		else
+		} else
 			// maybe need to move this method into a seperate class
 			updateRss();
-		
+
 	}
 
 	public void updateRss() {
