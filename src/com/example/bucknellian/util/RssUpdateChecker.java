@@ -53,11 +53,11 @@ public class RssUpdateChecker extends
 		// Parsing category indicator
 		private boolean parsingCategory;
 
-		public RssUpdateHandler(){
+		public RssUpdateHandler() {
 			super();
 			this.rssItems = new ArrayList<RssItem>();
 		}
-		
+
 		public ArrayList<RssItem> getItems() {
 			return this.rssItems;
 		}
@@ -129,7 +129,8 @@ public class RssUpdateChecker extends
 	}
 
 	public RssUpdateChecker(String url, SortedArrayList<RssItem> rssItems,
-			String icon, RssItemAdapter<RssItem> adapter, RssItemsDataSource rssItemsDataSource) {
+			String icon, RssItemAdapter<RssItem> adapter,
+			RssItemsDataSource rssItemsDataSource) {
 		this.url = url;
 		this.icon = icon;
 		this.localItems = rssItems;
@@ -139,6 +140,7 @@ public class RssUpdateChecker extends
 		// list, which is the newest
 		try {
 			RssItem item = rssItems.get(0);
+			Log.e("Date of the first element", item.getPubDate());
 			this.latestLocalDate = item.getPubDateObject();
 		} catch (Exception e) {
 			Log.e("No Items in rssItems", "No Items in rssItems");
@@ -170,15 +172,15 @@ public class RssUpdateChecker extends
 	@Override
 	protected void onPostExecute(ArrayList<RssItem> result) {
 		if (result != null) {
-			if (this.rssItemsDataSource != null)
+			if ((this.rssItemsDataSource != null) && result.size() != 0) {
 				this.rssItemsDataSource.addRssItems(result);
-			
-			for (RssItem item : result) {
-				this.localItems.insertSorted(item);
+
+				for (RssItem item : result) {
+					this.localItems.insertSorted(item);
+				}
+				this.adapter.notifyDataSetChanged();
 			}
-			this.adapter.notifyDataSetChanged();
-		}
-		else{
+		} else {
 			Log.e("Nothing to update", "Nothing to update");
 		}
 	}

@@ -67,7 +67,8 @@ public class newsFragment extends ListFragment implements OnRefreshListener {
 				adapter.notifyDataSetChanged();
 			}
 			
-		} else
+			updateRss();
+		} else {
 			// add new RSS
 			Log.e("Read New Rss", "Read New Rss");
 			GetRSSDataTask bucknellianTask = new GetRSSDataTask(this.rssItems,
@@ -78,6 +79,9 @@ public class newsFragment extends ListFragment implements OnRefreshListener {
 					this.adapter, "CampusVinyl.jpg", getActivity(),
 					this.rssItemsDataSource);
 			campusVinylTask.execute("http://feeds.feedburner.com/CampusVinyl");
+		}
+		
+		
 	}
 
 	public void updateRss() {

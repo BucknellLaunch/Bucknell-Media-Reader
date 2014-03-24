@@ -7,12 +7,10 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 
-import com.example.bucknellian.util.RssItemsDataSource;
 import com.example.bucknellian.views.newsFragment;
 
 public class MainActivity extends Activity{
 
-	public RssItemsDataSource rssItemsDataSource;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
