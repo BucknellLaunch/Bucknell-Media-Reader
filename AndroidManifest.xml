@@ -27,6 +27,10 @@
         </activity>
         <activity android:name="views.BlogView" >
         </activity>
+        <activity
+            android:name="activities.SettingsActivity"
+            android:label="Settings" >
+        </activity>
     </application>
 
 </manifest>
