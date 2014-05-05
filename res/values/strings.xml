@@ -6,5 +6,7 @@
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="RssTitle">Bucknellian Reader</string>
     <string name="bucknellian">Bucknellian</string>
+    <string name="settings">Settings</string>
+    <string name="help">Help</string>
 
 </resources>

@@ -2,16 +2,21 @@ package activities;
 
 
 import android.app.ActionBar;
-import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
-import fragments.newsFragment;
+import android.support.v7.app.ActionBarActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import com.example.bucknellian.R;
 
-public class MainActivity extends Activity{
+import fragments.newsFragment;
 
+public class MainActivity extends ActionBarActivity{
+	private static final int SHOW_PREFERENCES = 1;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +29,32 @@ public class MainActivity extends Activity{
 				.findFragmentById(R.id.BucknellianNewsFragment);
 	}
 
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu){
+	    MenuInflater inflater = getMenuInflater();
+	    inflater.inflate(R.menu.main_menu, menu);
+	    return super.onCreateOptionsMenu(menu);
+	}
 
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item){
+		
+		switch (item.getItemId()){
+		case R.id.actionBar_settings:
+			Intent i = new Intent(this,SettingsActivity.class);
+			startActivityForResult(i,SHOW_PREFERENCES);
+			return true;
+		case R.id.actionBar_help:
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+	}
+	
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data){
+		//update the UI based on the preferences. 
+	}
 
 	private void setTabs() {
 		final ActionBar actionBar = getActionBar();
