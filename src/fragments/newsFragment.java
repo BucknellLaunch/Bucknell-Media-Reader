@@ -23,7 +23,7 @@ import android.widget.ListView;
 
 import com.example.bucknellian.R;
 
-import data.RssItemsDataSource;
+import database.RssItemsDataSource;
 
 
 public class newsFragment extends ListFragment implements OnRefreshListener {

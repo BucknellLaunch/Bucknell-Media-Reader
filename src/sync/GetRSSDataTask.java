@@ -1,7 +1,7 @@
 package sync;
 
 
-import data.RssItemsDataSource;
+import database.RssItemsDataSource;
 import models.RssItem;
 import models.SortedArrayList;
 import adapters.RssItemAdapter;
