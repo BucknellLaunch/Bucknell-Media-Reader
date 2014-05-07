@@ -1,19 +1,20 @@
 package sync;
 
 
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+
 import database.RssItemsDataSource;
 import models.RssItem;
 import models.SortedArrayList;
 import adapters.RssItemAdapter;
 import android.app.Activity;
 import android.os.AsyncTask;
-import android.util.Log;
 
 
 public class NewRssAdapter extends AsyncTask<String, Void, Void> {
 
 	private String icon;
-	private RssReader rssReader;
 	private RssItemAdapter<RssItem> adapter;
 	private SortedArrayList<RssItem> rssItems;
 	private Activity activity;
@@ -53,20 +54,20 @@ public class NewRssAdapter extends AsyncTask<String, Void, Void> {
 		this.url = url;
 	}
 
+	
+	public void getItems() throws Exception {
+		SAXParserFactory factory = SAXParserFactory.newInstance();
+
+		SAXParser saxParser = factory.newSAXParser();
+		RssParseHandler handler = new RssParseHandler(this.icon, this.rssItems,
+				this, this.activity);
+		saxParser.parse(url, handler);
+	}
+
 	@Override
 	protected Void doInBackground(String... urls) {
-
-		// setTabs();
-
-		// Create a list adapter
-		this.rssReader = new RssReader(url, this.icon,
-				this.rssItems, this,this.activity);
-		// Debug the task thread name
-		Log.d("RssReader", Thread.currentThread().getName());
-
 		try {
-			// Parse RSS, get items
-			rssReader.getItems();
+			getItems();
 
 		} catch (Exception e) {
 			e.printStackTrace();
