@@ -4,7 +4,7 @@ import java.util.List;
 
 import models.RssItem;
 import models.SortedArrayList;
-import sync.NewRssAdapter;
+import sync.RssAdapter;
 import sync.UpdateRssAdapter;
 import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
@@ -65,8 +65,7 @@ public class newsFragment extends ListFragment implements OnRefreshListener {
 		} else {
 			// add new RSS
 			Log.e("Read New Rss", "Read New Rss");
-			NewRssAdapter newBucknellRssAdapter = new NewRssAdapter();
-			newBucknellRssAdapter.setBaseActivity(getActivity());
+			RssAdapter newBucknellRssAdapter = new RssAdapter();
 			newBucknellRssAdapter.setIcon("Bucknellian.jpg");
 			newBucknellRssAdapter.setListAdapter(adapter);
 			newBucknellRssAdapter.setRssItems(rssItems);
@@ -74,8 +73,7 @@ public class newsFragment extends ListFragment implements OnRefreshListener {
 			newBucknellRssAdapter.setUrl("http://bucknellian.net/category/news/feed/");			
 			newBucknellRssAdapter.execute();
 
-			NewRssAdapter newCampusVinylRssAdapter = new NewRssAdapter();
-			newCampusVinylRssAdapter.setBaseActivity(getActivity());
+			RssAdapter newCampusVinylRssAdapter = new RssAdapter();
 			newCampusVinylRssAdapter.setIcon("CampusVinyl.jpg");
 			newCampusVinylRssAdapter.setListAdapter(adapter);
 			newCampusVinylRssAdapter.setRssItems(rssItems);
@@ -90,6 +88,7 @@ public class newsFragment extends ListFragment implements OnRefreshListener {
 				"http://bucknellian.net/category/news/feed/",
 				this.rssItems, "Bucknellian.jpg", this.adapter,
 				this.rssItemsDataSource);
+		
 		bucknellChecker.execute();
 		
 		UpdateRssAdapter campusVinylChecker = new UpdateRssAdapter(

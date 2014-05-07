@@ -6,6 +6,7 @@ package sync;
 import java.util.ArrayList;
 
 import models.RssItem;
+import models.SortedArrayList;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -18,21 +19,44 @@ import org.xml.sax.helpers.DefaultHandler;
  *
  */
 public class RssHandler extends DefaultHandler {
-	protected ArrayList<RssItem> rssItems;
+	protected SortedArrayList<RssItem> rssItems;
 	protected RssItem currentItem;
 	protected boolean parsingTitle;
 	protected boolean parsingLink;
 	protected boolean parsingPubDate;
 	protected boolean parsingCategory;
+	protected String icon;
 	
 	public RssHandler(){
 		super();
-		this.rssItems = new ArrayList<RssItem>();
+	}
+	public void setRssItems(SortedArrayList<RssItem> rssItems){
+		this.rssItems = rssItems;
 	}
 	
+	public void setIcon(String icon){
+		this.icon = icon;
+	}
 	
 	public ArrayList<RssItem> getItems() {
 		return this.rssItems;
+	}
+	
+	@Override
+	public void endElement(String uri, String localName, String qName)
+			throws SAXException {
+		if ("item".equals(qName)) {
+			currentItem.setIcon(icon);
+			rssItems.insertSorted(currentItem);
+		} else if ("title".equals(qName)) {
+			parsingTitle = false;
+		} else if ("link".equals(qName)) {
+			parsingLink = false;
+		} else if ("pubDate".equals(qName)) {
+			parsingPubDate = false;
+		} else if ("category".equals(qName)) {
+			parsingCategory = false;
+		}
 	}
 	
 	

@@ -16,25 +16,18 @@ import org.xml.sax.SAXException;
 import database.RssItemsDataSource;
 
 import adapters.RssItemAdapter;
-import android.os.AsyncTask;
 import android.util.Log;
 
 
-public class UpdateRssAdapter extends
-		AsyncTask<String, Void, ArrayList<RssItem>> {
-	private String url;
+public class UpdateRssAdapter extends RssAdapter {
 	private Date latestLocalDate;
-
-	private String icon;
-	private SortedArrayList<RssItem> localItems;
-	private RssItemAdapter<RssItem> adapter;
-	private RssItemsDataSource rssItemsDataSource;
 
 	// an inner Handler class to handle RSS data.
 	private class RssUpdateHandler extends RssHandler {
 
 		public RssUpdateHandler() {
 			super();
+			this.rssItems = new SortedArrayList<RssItem>();
 		}
 
 		@Override
@@ -67,7 +60,7 @@ public class UpdateRssAdapter extends
 			RssItemsDataSource rssItemsDataSource) {
 		this.url = url;
 		this.icon = icon;
-		this.localItems = rssItems;
+		this.rssItems = rssItems;
 		this.adapter = adapter;
 		this.rssItemsDataSource = rssItemsDataSource;
 		// set latestLocalDate to the date of the first item in the rssItem
@@ -112,7 +105,7 @@ public class UpdateRssAdapter extends
 				this.rssItemsDataSource.addRssItems(result);
 
 				for (RssItem item : result) {
-					this.localItems.insertSorted(item);
+					this.rssItems.insertSorted(item);
 				}
 				this.adapter.notifyDataSetChanged();
 			}
