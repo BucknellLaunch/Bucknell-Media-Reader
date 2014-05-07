@@ -13,9 +13,6 @@ import models.SortedArrayList;
 
 import org.xml.sax.SAXException;
 
-import database.RssItemsDataSource;
-
-import adapters.RssItemAdapter;
 import android.util.Log;
 
 
@@ -55,16 +52,8 @@ public class UpdateRssAdapter extends RssAdapter {
 		}
 	}
 
-	public UpdateRssAdapter(String url, SortedArrayList<RssItem> rssItems,
-			String icon, RssItemAdapter<RssItem> adapter,
-			RssItemsDataSource rssItemsDataSource) {
-		this.url = url;
-		this.icon = icon;
-		this.rssItems = rssItems;
-		this.adapter = adapter;
-		this.rssItemsDataSource = rssItemsDataSource;
-		// set latestLocalDate to the date of the first item in the rssItem
-		// list, which is the newest
+	
+	public void setupLatestLocalDate(){
 		try {
 			if (rssItems.size() == 0)
 				return;

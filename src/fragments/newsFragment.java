@@ -84,17 +84,23 @@ public class newsFragment extends ListFragment implements OnRefreshListener {
 	}
 
 	public void updateRss() {
-		UpdateRssAdapter bucknellChecker = new UpdateRssAdapter(
-				"http://bucknellian.net/category/news/feed/",
-				this.rssItems, "Bucknellian.jpg", this.adapter,
-				this.rssItemsDataSource);
-		
+		UpdateRssAdapter bucknellChecker = new UpdateRssAdapter();
+		bucknellChecker.setIcon("Bucknellian.jpg");
+		bucknellChecker.setListAdapter(adapter);
+		bucknellChecker.setRssItems(rssItems);
+		bucknellChecker.setDataSource(rssItemsDataSource);
+		bucknellChecker.setUrl("http://bucknellian.net/category/news/feed/");		
+		bucknellChecker.setupLatestLocalDate();
 		bucknellChecker.execute();
 		
-		UpdateRssAdapter campusVinylChecker = new UpdateRssAdapter(
-				"http://feeds.feedburner.com/CampusVinyl",
-				this.rssItems, "CampusVinyl.jpg", this.adapter,
-				this.rssItemsDataSource);
+		
+		UpdateRssAdapter campusVinylChecker = new UpdateRssAdapter();
+		campusVinylChecker.setIcon("CampusVinyl.jpg");
+		campusVinylChecker.setListAdapter(adapter);
+		campusVinylChecker.setRssItems(rssItems);
+		campusVinylChecker.setDataSource(rssItemsDataSource);
+		campusVinylChecker.setUrl("http://feeds.feedburner.com/CampusVinyl");		
+		campusVinylChecker.setupLatestLocalDate();
 		campusVinylChecker.execute();
 	}
 
