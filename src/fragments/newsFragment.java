@@ -4,9 +4,8 @@ import java.util.List;
 
 import models.RssItem;
 import models.SortedArrayList;
-
-import sync.GetRSSDataTask;
-import sync.RssUpdateChecker;
+import sync.NewRssAdapter;
+import sync.UpdateRssAdapter;
 import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
 import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
@@ -66,25 +65,34 @@ public class newsFragment extends ListFragment implements OnRefreshListener {
 		} else {
 			// add new RSS
 			Log.e("Read New Rss", "Read New Rss");
-			GetRSSDataTask bucknellianTask = new GetRSSDataTask(this.rssItems,
-					this.adapter, "Bucknellian.jpg", getActivity(), null);
-			bucknellianTask.execute("http://bucknellian.net/category/news/feed/");
+			NewRssAdapter newBucknellRssAdapter = new NewRssAdapter();
+			newBucknellRssAdapter.setBaseActivity(getActivity());
+			newBucknellRssAdapter.setIcon("Bucknellian.jpg");
+			newBucknellRssAdapter.setListAdapter(adapter);
+			newBucknellRssAdapter.setRssItems(rssItems);
+			newBucknellRssAdapter.setDataSource(rssItemsDataSource);
+			newBucknellRssAdapter.setUrl("http://bucknellian.net/category/news/feed/");			
+			newBucknellRssAdapter.execute();
 
-			GetRSSDataTask campusVinylTask = new GetRSSDataTask(this.rssItems,
-					this.adapter, "CampusVinyl.jpg", getActivity(),
-					this.rssItemsDataSource);
-			campusVinylTask.execute("http://feeds.feedburner.com/CampusVinyl");
+			NewRssAdapter newCampusVinylRssAdapter = new NewRssAdapter();
+			newCampusVinylRssAdapter.setBaseActivity(getActivity());
+			newCampusVinylRssAdapter.setIcon("CampusVinyl.jpg");
+			newCampusVinylRssAdapter.setListAdapter(adapter);
+			newCampusVinylRssAdapter.setRssItems(rssItems);
+			newCampusVinylRssAdapter.setDataSource(rssItemsDataSource);
+			newCampusVinylRssAdapter.setUrl("http://feeds.feedburner.com/CampusVinyl");
+			newCampusVinylRssAdapter.execute();
 		}
 	}
 
 	public void updateRss() {
-		RssUpdateChecker bucknellChecker = new RssUpdateChecker(
+		UpdateRssAdapter bucknellChecker = new UpdateRssAdapter(
 				"http://bucknellian.net/category/news/feed/",
 				this.rssItems, "Bucknellian.jpg", this.adapter,
 				this.rssItemsDataSource);
 		bucknellChecker.execute();
 		
-		RssUpdateChecker campusVinylChecker = new RssUpdateChecker(
+		UpdateRssAdapter campusVinylChecker = new UpdateRssAdapter(
 				"http://feeds.feedburner.com/CampusVinyl",
 				this.rssItems, "CampusVinyl.jpg", this.adapter,
 				this.rssItemsDataSource);

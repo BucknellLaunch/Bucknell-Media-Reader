@@ -20,7 +20,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 
-public class RssUpdateChecker extends
+public class UpdateRssAdapter extends
 		AsyncTask<String, Void, ArrayList<RssItem>> {
 	private String url;
 	private Date latestLocalDate;
@@ -62,7 +62,7 @@ public class RssUpdateChecker extends
 		}
 	}
 
-	public RssUpdateChecker(String url, SortedArrayList<RssItem> rssItems,
+	public UpdateRssAdapter(String url, SortedArrayList<RssItem> rssItems,
 			String icon, RssItemAdapter<RssItem> adapter,
 			RssItemsDataSource rssItemsDataSource) {
 		this.url = url;

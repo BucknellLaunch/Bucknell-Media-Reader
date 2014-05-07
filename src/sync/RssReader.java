@@ -15,12 +15,12 @@ public class RssReader {
 	private String rssUrl;
 	private String icon;
 	private SortedArrayList<RssItem> rssItems;
-	private GetRSSDataTask task;
+	private NewRssAdapter task;
 
 	private Activity activity;
 
 	public RssReader(String rssUrl, String icon, SortedArrayList<RssItem> rssItems,
-			GetRSSDataTask task, Activity activity) {
+			NewRssAdapter task, Activity activity) {
 		this.rssUrl = rssUrl;
 		this.icon = icon;
 		this.task = task;

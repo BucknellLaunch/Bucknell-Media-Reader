@@ -32,11 +32,11 @@ public class RssParseHandler extends DefaultHandler {
 	private boolean parsingCategory;
 	
 	private String icon;
-	private GetRSSDataTask task;
+	private NewRssAdapter task;
 	private Activity activity;
 	
 	public RssParseHandler(String icon, SortedArrayList<RssItem> rssItems,
-			GetRSSDataTask task, Activity activity) {
+			NewRssAdapter task, Activity activity) {
 		this.rssItems = rssItems;
 		this.task = task;
 		this.icon = icon;

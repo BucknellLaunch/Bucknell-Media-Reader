@@ -10,7 +10,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 
-public class GetRSSDataTask extends AsyncTask<String, Void, Void> {
+public class NewRssAdapter extends AsyncTask<String, Void, Void> {
 
 	private String icon;
 	private RssReader rssReader;
@@ -18,20 +18,39 @@ public class GetRSSDataTask extends AsyncTask<String, Void, Void> {
 	private SortedArrayList<RssItem> rssItems;
 	private Activity activity;
 	private RssItemsDataSource rssItemsDataSource;
+	private String url;
 
-	public GetRSSDataTask(SortedArrayList<RssItem> rssItems, RssItemAdapter<RssItem> adapter, String icon, Activity activity, RssItemsDataSource rssItemsDataSource) {
+	public NewRssAdapter() {
 		super();
-		this.icon = icon;
-		this.adapter = adapter;
-		this.rssItems = rssItems;
-		this.activity = activity;
-		this.rssItemsDataSource = rssItemsDataSource;
-		
 	}
 
 	@Override
 	protected void onPreExecute() {
 
+	}
+	
+	public void setIcon(String icon){
+		this.icon = icon;
+	}
+	
+	public void setRssItems(SortedArrayList<RssItem> rssItems){
+		this.rssItems = rssItems;
+	}
+	
+	public void setListAdapter(RssItemAdapter<RssItem> adapter){
+		this.adapter = adapter;
+	}
+	
+	public void setBaseActivity(Activity activity){
+		this.activity = activity;
+	}
+	
+	public void setDataSource(RssItemsDataSource rssItemsDataSource){
+		this.rssItemsDataSource = rssItemsDataSource;
+	}
+	
+	public void setUrl(String url){
+		this.url = url;
 	}
 
 	@Override
@@ -40,7 +59,7 @@ public class GetRSSDataTask extends AsyncTask<String, Void, Void> {
 		// setTabs();
 
 		// Create a list adapter
-		this.rssReader = new RssReader(urls[0], this.icon,
+		this.rssReader = new RssReader(url, this.icon,
 				this.rssItems, this,this.activity);
 		// Debug the task thread name
 		Log.d("RssReader", Thread.currentThread().getName());
