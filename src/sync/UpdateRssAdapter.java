@@ -67,7 +67,7 @@ public class UpdateRssAdapter extends RssAdapter {
 	}
 
 	@Override
-	protected ArrayList<RssItem> doInBackground(String... params) {
+	protected ArrayList<RssItem> doInBackground(Void... params) {
 
 		SAXParserFactory factory = SAXParserFactory.newInstance();
 

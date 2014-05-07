@@ -19,7 +19,7 @@ import android.os.AsyncTask;
  * @author Li Li
  * 
  */
-public class RssAdapter extends AsyncTask<String, Void, ArrayList<RssItem>> {
+public class RssAdapter extends AsyncTask<Void, Void, ArrayList<RssItem>> {
 
 	protected String icon;
 	protected String url;
@@ -48,7 +48,7 @@ public class RssAdapter extends AsyncTask<String, Void, ArrayList<RssItem>> {
 	}
 
 	@Override
-	protected ArrayList<RssItem> doInBackground(String... urls) {
+	protected ArrayList<RssItem> doInBackground(Void... params) {
 		try {
 			SAXParserFactory factory = SAXParserFactory.newInstance();
 			SAXParser saxParser = factory.newSAXParser();
