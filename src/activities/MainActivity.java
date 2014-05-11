@@ -2,7 +2,6 @@ package activities;
 
 
 import android.app.ActionBar;
-import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,8 +12,6 @@ import android.view.MenuItem;
 
 import com.example.bucknellian.R;
 
-import fragments.newsFragment;
-
 public class MainActivity extends ActionBarActivity{
 	private static final int SHOW_PREFERENCES = 1;
 
@@ -23,10 +20,8 @@ public class MainActivity extends ActionBarActivity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		// Get references to the Fragments
-		FragmentManager fm = getFragmentManager();
+		
 		// find the fragment
-		newsFragment bucknellianNewsFragment = (newsFragment) fm
-				.findFragmentById(R.id.BucknellianNewsFragment);
 	}
 
 	@Override

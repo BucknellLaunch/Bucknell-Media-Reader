@@ -12,6 +12,9 @@ import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 import views.BlogView;
 import adapters.RssItemAdapter;
 import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.app.ListFragment;
 import android.content.Intent;
 import android.os.Bundle;
@@ -25,7 +28,7 @@ import com.example.bucknellian.R;
 import database.RssItemsDataSource;
 
 
-public class newsFragment extends ListFragment implements OnRefreshListener {
+public class NewsFragment extends ListFragment implements OnRefreshListener {
 	private PullToRefreshLayout pullToRefreshLayout;
 	private SortedArrayList<RssItem> rssItems;
 	private RssItemAdapter<RssItem> adapter;
@@ -49,8 +52,8 @@ public class newsFragment extends ListFragment implements OnRefreshListener {
 		this.rssItemsDataSource = new RssItemsDataSource(getActivity());
 		this.rssItemsDataSource.open();
 
-		this.setListAdapter(adapter);
-
+		this.setListAdapter(adapter);	
+		
 		// if there is something in the database, display them first.
 		if (!rssItemsDataSource.isDatabaseEmpty()) {
 			Log.e("Read Old Rss", "Read Old Rss");
@@ -63,6 +66,8 @@ public class newsFragment extends ListFragment implements OnRefreshListener {
 			
 			updateRss();
 		} else {
+			showSplashScreen();
+			
 			// add new RSS
 			Log.e("Read New Rss", "Read New Rss");
 			RssAdapter newBucknellRssAdapter = new RssAdapter();
@@ -79,8 +84,17 @@ public class newsFragment extends ListFragment implements OnRefreshListener {
 			newCampusVinylRssAdapter.setRssItems(rssItems);
 			newCampusVinylRssAdapter.setDataSource(rssItemsDataSource);
 			newCampusVinylRssAdapter.setUrl("http://feeds.feedburner.com/CampusVinyl");
+			newCampusVinylRssAdapter.setActivity(getActivity());
 			newCampusVinylRssAdapter.execute();
 		}
+	}
+
+	private void showSplashScreen() {
+		FragmentManager fm = getFragmentManager();
+		FragmentTransaction fragmentTransaction = fm.beginTransaction();
+		Fragment splashScreen = new SplashScreenFragment();
+		fragmentTransaction.add(android.R.id.content, splashScreen, "SplashScreen");
+		fragmentTransaction.commit();
 	}
 
 	public void updateRss() {
@@ -101,7 +115,10 @@ public class newsFragment extends ListFragment implements OnRefreshListener {
 		campusVinylChecker.setDataSource(rssItemsDataSource);
 		campusVinylChecker.setUrl("http://feeds.feedburner.com/CampusVinyl");		
 		campusVinylChecker.setupLatestLocalDate();
+		
 		campusVinylChecker.execute();
+		
+		
 	}
 
 	@Override

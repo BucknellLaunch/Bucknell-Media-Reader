@@ -8,12 +8,16 @@ import java.util.ArrayList;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
-import database.RssItemsDataSource;
-
 import models.RssItem;
 import models.SortedArrayList;
 import adapters.RssItemAdapter;
+import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.AsyncTask;
+import android.util.Log;
+import database.RssItemsDataSource;
 
 /**
  * @author Li Li
@@ -26,6 +30,7 @@ public class RssAdapter extends AsyncTask<Void, Void, ArrayList<RssItem>> {
 	protected RssItemAdapter<RssItem> adapter;
 	protected RssItemsDataSource rssItemsDataSource;
 	protected SortedArrayList<RssItem> rssItems;
+	protected Activity activity;
 
 	public void setIcon(String icon) {
 		this.icon = icon;
@@ -71,6 +76,27 @@ public class RssAdapter extends AsyncTask<Void, Void, ArrayList<RssItem>> {
 				this.rssItemsDataSource.addRssItems(this.rssItems);
 		}
 		adapter.notifyDataSetChanged();
+		
+		if (activity != null) {
+			removeSplashScreen();
+		}
+	}
+
+	private void removeSplashScreen() {
+		FragmentManager fm = activity.getFragmentManager();
+		FragmentTransaction fragmentTransaction = fm.beginTransaction();
+		Fragment splashScreen = fm.findFragmentByTag("SplashScreen");
+		if (splashScreen == null) {
+			Log.e("Cannot find spashscreen by tag",
+					"Cannot find spashscreen by tag");
+		} else {
+			fragmentTransaction.remove(splashScreen);
+		}
+		fragmentTransaction.commit();
+	}
+
+	public void setActivity(Activity activity) {
+		this.activity = activity;
 	}
 
 }

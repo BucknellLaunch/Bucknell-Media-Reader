@@ -1,21 +1,22 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id = "@+id/MainFrameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0099cc"
-    tools:context=".MainActivity" >
+    tools:context=".MainActivity">
 
-    <uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/mainView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
 
-        <fragment
-            android:id="@+id/BucknellianNewsFragment"
-            android:name="fragments.newsFragment"
+        <uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/mainView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout>
+            android:layout_height="match_parent" >
+
+            <fragment
+                android:id="@+id/BucknellianNewsFragment"
+                android:name="fragments.NewsFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout>
 
 </FrameLayout>
