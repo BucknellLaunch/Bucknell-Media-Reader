@@ -115,7 +115,7 @@ public class NewsFragment extends ListFragment implements OnRefreshListener {
 		campusVinylChecker.setDataSource(rssItemsDataSource);
 		campusVinylChecker.setUrl("http://feeds.feedburner.com/CampusVinyl");		
 		campusVinylChecker.setupLatestLocalDate();
-		
+		campusVinylChecker.setPullToRefeshLayout(pullToRefreshLayout);
 		campusVinylChecker.execute();
 		
 		
@@ -174,7 +174,7 @@ public class NewsFragment extends ListFragment implements OnRefreshListener {
 	@Override
 	public void onRefreshStarted(View view) {
 		updateRss();
-		pullToRefreshLayout.setRefreshComplete();
+		//pullToRefreshLayout.setRefreshComplete();
 	}
 
 }

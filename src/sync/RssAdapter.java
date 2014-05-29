@@ -31,7 +31,7 @@ public class RssAdapter extends AsyncTask<Void, Void, ArrayList<RssItem>> {
 	protected RssItemsDataSource rssItemsDataSource;
 	protected SortedArrayList<RssItem> rssItems;
 	protected Activity activity;
-
+	
 	public void setIcon(String icon) {
 		this.icon = icon;
 	}

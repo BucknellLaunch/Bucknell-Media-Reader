@@ -13,11 +13,12 @@ import models.SortedArrayList;
 
 import org.xml.sax.SAXException;
 
+import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
 import android.util.Log;
-
 
 public class UpdateRssAdapter extends RssAdapter {
 	private Date latestLocalDate;
+	private PullToRefreshLayout pullToRefreshLayout;
 
 	// an inner Handler class to handle RSS data.
 	private class RssUpdateHandler extends RssHandler {
@@ -52,8 +53,11 @@ public class UpdateRssAdapter extends RssAdapter {
 		}
 	}
 
-	
-	public void setupLatestLocalDate(){
+	public void setPullToRefeshLayout(PullToRefreshLayout pullToRefreshLayout) {
+		this.pullToRefreshLayout = pullToRefreshLayout;
+	}
+
+	public void setupLatestLocalDate() {
 		try {
 			if (rssItems.size() == 0)
 				return;
@@ -101,5 +105,10 @@ public class UpdateRssAdapter extends RssAdapter {
 		} else {
 			Log.e("Nothing to update", "Nothing to update");
 		}
+		if (pullToRefreshLayout != null) {
+			pullToRefreshLayout.setRefreshComplete();
+			Log.e("Finish pullToRefresh", "Finish pullToRefresh");
+		}
+		Log.e("finish", "finish");
 	}
 }
