@@ -166,15 +166,27 @@ public class NewsFragment extends ListFragment implements OnRefreshListener {
 		 * activity with our Intent activity.startActivity(i);
 		 */
 
+		/*
 		Intent i = new Intent(getActivity(), BlogView.class);
 		i.putExtra("url", rssItems.get(position).getLink());
 		startActivity(i);
+		*/
+		
+		Bundle bundle = new Bundle();
+		bundle.putString("url", rssItems.get(position).getLink());
+		
+		BlogViewFragment blogViewFragment = new BlogViewFragment();
+		blogViewFragment.setArguments(bundle);
+		
+		FragmentManager fragmentManager = getFragmentManager();
+		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+		fragmentTransaction.add(android.R.id.content, blogViewFragment);
+		fragmentTransaction.commit();
 	}
 
 	@Override
 	public void onRefreshStarted(View view) {
 		updateRss();
-		//pullToRefreshLayout.setRefreshComplete();
 	}
 
 }
