@@ -71,7 +71,7 @@ public class UpdateRssAdapter extends RssAdapter {
 	}
 
 	@Override
-	protected ArrayList<RssItem> doInBackground(Void... params) {
+	protected SortedArrayList<RssItem> doInBackground(Void... params) {
 
 		SAXParserFactory factory = SAXParserFactory.newInstance();
 
@@ -92,7 +92,7 @@ public class UpdateRssAdapter extends RssAdapter {
 	}
 
 	@Override
-	protected void onPostExecute(ArrayList<RssItem> result) {
+	protected void onPostExecute(SortedArrayList<RssItem> result) {
 		if (result != null) {
 			if ((this.rssItemsDataSource != null) && result.size() != 0) {
 				this.rssItemsDataSource.addRssItems(result);

@@ -66,6 +66,12 @@ public class RssItemsDataSource {
 	public void deleteRssItemBeforeDate() {
 		// to do: delete a RssItem from the database
 	}
+	
+	public void clearTable(){
+		if (database != null){
+			database.delete(RssSQLiteHelper.TABLE_RSS_ITEMS, null, null);
+		}
+	}
 
 	public List<RssItem> getAllRssItems() {
 		List<RssItem> items = new ArrayList<RssItem>();

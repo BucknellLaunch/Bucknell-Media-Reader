@@ -23,7 +23,7 @@ import database.RssItemsDataSource;
  * @author Li Li
  * 
  */
-public class RssAdapter extends AsyncTask<Void, Void, ArrayList<RssItem>> {
+public class RssAdapter extends AsyncTask<Void, Void, SortedArrayList<RssItem>> {
 
 	protected String icon;
 	protected String url;
@@ -53,7 +53,7 @@ public class RssAdapter extends AsyncTask<Void, Void, ArrayList<RssItem>> {
 	}
 
 	@Override
-	protected ArrayList<RssItem> doInBackground(Void... params) {
+	protected SortedArrayList<RssItem> doInBackground(Void... params) {
 		try {
 			SAXParserFactory factory = SAXParserFactory.newInstance();
 			SAXParser saxParser = factory.newSAXParser();
@@ -70,7 +70,7 @@ public class RssAdapter extends AsyncTask<Void, Void, ArrayList<RssItem>> {
 	}
 
 	@Override
-	protected void onPostExecute(ArrayList<RssItem> result) {
+	protected void onPostExecute(SortedArrayList<RssItem> result) {
 		if (result != null) {
 			if (this.rssItemsDataSource != null)
 				this.rssItemsDataSource.addRssItems(this.rssItems);

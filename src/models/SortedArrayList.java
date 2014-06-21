@@ -1,10 +1,10 @@
 package models;
 
-import java.util.ArrayList;
 import java.util.Collections;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 @SuppressWarnings("serial")
-public class SortedArrayList<T> extends ArrayList<T> {
+public class SortedArrayList<T> extends CopyOnWriteArrayList<T> {
 
     @SuppressWarnings("unchecked")
     public void insertSorted(T value) {

@@ -31,7 +31,16 @@ import database.RssItemsDataSource;
 public class NewsFragment extends ListFragment implements OnRefreshListener {
 	private PullToRefreshLayout pullToRefreshLayout;
 	private SortedArrayList<RssItem> rssItems;
+	public SortedArrayList<RssItem> getRssItems() {
+		return rssItems;
+	}
+
 	private RssItemAdapter<RssItem> adapter;
+	
+	public RssItemAdapter<RssItem> getAdapter() {
+		return adapter;
+	}
+
 	public RssItemsDataSource rssItemsDataSource;
 
 

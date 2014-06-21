@@ -38,7 +38,7 @@ public class RssHandler extends DefaultHandler {
 		this.icon = icon;
 	}
 	
-	public ArrayList<RssItem> getItems() {
+	public SortedArrayList<RssItem> getItems() {
 		return this.rssItems;
 	}
 	

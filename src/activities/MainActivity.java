@@ -1,7 +1,9 @@
 package activities;
 
-
+import models.RssItem;
+import models.SortedArrayList;
 import android.app.ActionBar;
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,7 +14,10 @@ import android.view.MenuItem;
 
 import com.example.bucknellian.R;
 
-public class MainActivity extends ActionBarActivity{
+import database.RssItemsDataSource;
+import fragments.NewsFragment;
+
+public class MainActivity extends ActionBarActivity {
 	private static final int SHOW_PREFERENCES = 1;
 
 	@Override
@@ -20,35 +25,47 @@ public class MainActivity extends ActionBarActivity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		// Get references to the Fragments
-		
+
 		// find the fragment
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu){
-	    MenuInflater inflater = getMenuInflater();
-	    inflater.inflate(R.menu.main_menu, menu);
-	    return super.onCreateOptionsMenu(menu);
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.main_menu, menu);
+		return super.onCreateOptionsMenu(menu);
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item){
-		
-		switch (item.getItemId()){
+	public boolean onOptionsItemSelected(MenuItem item) {
+
+		switch (item.getItemId()) {
 		case R.id.actionBar_settings:
-			Intent i = new Intent(this,SettingsActivity.class);
-			startActivityForResult(i,SHOW_PREFERENCES);
+			Intent i = new Intent(this, SettingsActivity.class);
+			startActivityForResult(i, SHOW_PREFERENCES);
 			return true;
 		case R.id.actionBar_help:
+			return true;
+		case R.id.actionBar_clearData:
+			RssItemsDataSource rssItemsDataSource = new RssItemsDataSource(this);
+			rssItemsDataSource.open();
+			rssItemsDataSource.clearTable();
+			rssItemsDataSource.close();
+			FragmentManager fm = getFragmentManager();
+			NewsFragment nf =  (NewsFragment) fm.findFragmentById(R.id.BucknellianNewsFragment);
+			SortedArrayList<RssItem> rssItems = nf.getRssItems();
+			rssItems.clear();
+			nf.getAdapter().notifyDataSetChanged();
+			
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
 	}
-	
+
 	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent data){
-		//update the UI based on the preferences. 
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// update the UI based on the preferences.
 	}
 
 	private void setTabs() {
