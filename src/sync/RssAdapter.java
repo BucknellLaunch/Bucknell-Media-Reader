@@ -3,7 +3,6 @@
  */
 package sync;
 
-import java.util.ArrayList;
 
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
