@@ -84,7 +84,8 @@ public class NewsFragment extends ListFragment implements OnRefreshListener {
 			newBucknellRssAdapter.setListAdapter(adapter);
 			newBucknellRssAdapter.setRssItems(rssItems);
 			newBucknellRssAdapter.setDataSource(rssItemsDataSource);
-			newBucknellRssAdapter.setUrl("http://bucknellian.net/category/news/feed/");			
+			newBucknellRssAdapter.setUrl("http://bucknellian.net/category/news/feed/");		
+			newBucknellRssAdapter.setActivity(getActivity());
 			newBucknellRssAdapter.execute();
 
 			RssAdapter newCampusVinylRssAdapter = new RssAdapter();
@@ -94,6 +95,7 @@ public class NewsFragment extends ListFragment implements OnRefreshListener {
 			newCampusVinylRssAdapter.setDataSource(rssItemsDataSource);
 			newCampusVinylRssAdapter.setUrl("http://feeds.feedburner.com/CampusVinyl");
 			newCampusVinylRssAdapter.setActivity(getActivity());
+			newCampusVinylRssAdapter.setAbleToRemoveSplashScreen();
 			newCampusVinylRssAdapter.execute();
 		}
 	}
@@ -113,7 +115,7 @@ public class NewsFragment extends ListFragment implements OnRefreshListener {
 		bucknellChecker.setRssItems(rssItems);
 		bucknellChecker.setDataSource(rssItemsDataSource);
 		bucknellChecker.setUrl("http://bucknellian.net/category/news/feed/");		
-		bucknellChecker.setupLatestLocalDate();
+		bucknellChecker.setActivity(getActivity());
 		bucknellChecker.execute();
 		
 		
@@ -123,7 +125,7 @@ public class NewsFragment extends ListFragment implements OnRefreshListener {
 		campusVinylChecker.setRssItems(rssItems);
 		campusVinylChecker.setDataSource(rssItemsDataSource);
 		campusVinylChecker.setUrl("http://feeds.feedburner.com/CampusVinyl");		
-		campusVinylChecker.setupLatestLocalDate();
+		campusVinylChecker.setActivity(getActivity());
 		campusVinylChecker.setPullToRefeshLayout(pullToRefreshLayout);
 		campusVinylChecker.execute();
 		

@@ -8,6 +8,7 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 import models.RssItem;
+import models.RssLatestDate;
 import models.SortedArrayList;
 import adapters.RssItemAdapter;
 import android.app.Activity;
@@ -30,6 +31,8 @@ public class RssAdapter extends AsyncTask<Void, Void, SortedArrayList<RssItem>> 
 	protected RssItemsDataSource rssItemsDataSource;
 	protected SortedArrayList<RssItem> rssItems;
 	protected Activity activity;
+	protected RssLatestDate latestDate;
+	protected boolean ableToRemoveSplashScreen;
 	
 	public void setIcon(String icon) {
 		this.icon = icon;
@@ -50,6 +53,10 @@ public class RssAdapter extends AsyncTask<Void, Void, SortedArrayList<RssItem>> 
 	public void setUrl(String url) {
 		this.url = url;
 	}
+	
+	public void setAbleToRemoveSplashScreen(){
+		this.ableToRemoveSplashScreen = true;
+	}
 
 	@Override
 	protected SortedArrayList<RssItem> doInBackground(Void... params) {
@@ -57,7 +64,6 @@ public class RssAdapter extends AsyncTask<Void, Void, SortedArrayList<RssItem>> 
 			SAXParserFactory factory = SAXParserFactory.newInstance();
 			SAXParser saxParser = factory.newSAXParser();
 			RssHandler handler = new RssHandler();
-			handler.setRssItems(rssItems);
 			handler.setIcon(icon);
 			saxParser.parse(url, handler);
 			return handler.getItems();
@@ -72,12 +78,24 @@ public class RssAdapter extends AsyncTask<Void, Void, SortedArrayList<RssItem>> 
 	protected void onPostExecute(SortedArrayList<RssItem> result) {
 		if (result != null) {
 			if (this.rssItemsDataSource != null)
-				this.rssItemsDataSource.addRssItems(this.rssItems);
+				this.rssItemsDataSource.addRssItems(result);
+			for (RssItem rssItem: result){
+				this.rssItems.insertSorted(rssItem);
+			}
+			adapter.notifyDataSetChanged();
 		}
-		adapter.notifyDataSetChanged();
+
+		updateLatestDate();
 		
-		if (activity != null) {
+		if (activity != null && ableToRemoveSplashScreen == true) {
 			removeSplashScreen();
+		}
+	}
+
+	protected void updateLatestDate() {
+		if (this.rssItems != null){
+			latestDate = RssLatestDate.getInstance(activity);
+			latestDate.update(this.rssItems.get(0).getPubDateObject());
 		}
 	}
 

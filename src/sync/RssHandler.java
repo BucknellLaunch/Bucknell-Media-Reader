@@ -29,10 +29,9 @@ public class RssHandler extends DefaultHandler {
 	
 	public RssHandler(){
 		super();
+		this.rssItems = new SortedArrayList<RssItem>();
 	}
-	public void setRssItems(SortedArrayList<RssItem> rssItems){
-		this.rssItems = rssItems;
-	}
+
 	
 	public void setIcon(String icon){
 		this.icon = icon;

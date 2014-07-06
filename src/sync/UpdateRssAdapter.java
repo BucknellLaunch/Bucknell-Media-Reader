@@ -9,6 +9,7 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 import models.RssItem;
+import models.RssLatestDate;
 import models.SortedArrayList;
 
 import org.xml.sax.SAXException;
@@ -17,7 +18,6 @@ import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
 import android.util.Log;
 
 public class UpdateRssAdapter extends RssAdapter {
-	private Date latestLocalDate;
 	private PullToRefreshLayout pullToRefreshLayout;
 
 	// an inner Handler class to handle RSS data.
@@ -34,7 +34,8 @@ public class UpdateRssAdapter extends RssAdapter {
 			if ("item".equals(qName)) {
 				Date remoteDate = currentItem.getPubDateObject();
 				try {
-					if (latestLocalDate.compareTo(remoteDate) < 0) {
+					latestDate = RssLatestDate.getInstance(activity);
+					if (latestDate.get().compareTo(remoteDate) < 0) {
 						currentItem.setIcon(icon);
 						this.rssItems.add(currentItem);
 					}
@@ -57,18 +58,6 @@ public class UpdateRssAdapter extends RssAdapter {
 		this.pullToRefreshLayout = pullToRefreshLayout;
 	}
 
-	public void setupLatestLocalDate() {
-		try {
-			if (rssItems.size() == 0)
-				return;
-			RssItem item = rssItems.get(0);
-			Log.e("Date of the first element", item.getPubDate());
-			this.latestLocalDate = item.getPubDateObject();
-		} catch (Exception e) {
-			Log.e("No Items in rssItems", "No Items in rssItems");
-			e.printStackTrace();
-		}
-	}
 
 	@Override
 	protected SortedArrayList<RssItem> doInBackground(Void... params) {
@@ -102,6 +91,8 @@ public class UpdateRssAdapter extends RssAdapter {
 				}
 				this.adapter.notifyDataSetChanged();
 			}
+			
+			updateLatestDate();
 		} else {
 			Log.e("Nothing to update", "Nothing to update");
 		}
