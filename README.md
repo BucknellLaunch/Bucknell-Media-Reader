@@ -1,4 +1,4 @@
-## Important Note
+# Important Note
 This version of Bucknell Media Reader is no longer maintained. It has been replaced by [Bucknell Reader 2.0](https://github.com/BucknellLaunch/launch-bucknell-reader-v2.0) being developed by Li Li (Boolli). 
 
 
